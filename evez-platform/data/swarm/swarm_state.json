@@ -1,0 +1,27 @@
+{
+  "nodes": [
+    {
+      "id": "28a61fabcd33",
+      "name": "edge-local",
+      "tier": "edge",
+      "endpoint": "local",
+      "cpus": 2,
+      "ram_gb": 2.9,
+      "gpu": "",
+      "status": "online",
+      "last_heartbeat": 1774956079.231813,
+      "tasks_completed": 0,
+      "capabilities": [
+        "shell",
+        "python",
+        "git",
+        "file_io",
+        "web"
+      ],
+      "metadata": {}
+    }
+  ],
+  "pending_tasks": 0,
+  "completed_tasks": 0,
+  "updated": "2026-03-31T11:21:19.231942+00:00"
+}

@@ -31,6 +31,7 @@ from search import SearchEngine
 from stream import AutonomousStream
 from swarm import ComputeSwarm, SwarmProvisioner, ComputeTier
 from cognition import CognitiveEngine
+from access import EveZAccess
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -58,6 +59,7 @@ streamer: AutonomousStream = None
 swarm: ComputeSwarm = None
 provisioner: SwarmProvisioner = None
 cognition: CognitiveEngine = None
+access_layer: EveZAccess = None
 
 
 @asynccontextmanager
@@ -74,6 +76,7 @@ async def lifespan(app: FastAPI):
     swarm = ComputeSwarm(DATA_DIR / "swarm")
     provisioner = SwarmProvisioner()
     cognition = CognitiveEngine(core.spine)
+    access_layer = EveZAccess(core.spine, core.memory, cognition)
 
     # Store startup in spine
     core.spine.write("platform.start", {
@@ -406,6 +409,49 @@ async def set_cognition_focus(request: Request):
     body = await request.json()
     cognition.set_focus(body.get("target", ""), body.get("reason", ""))
     return {"status": "ok"}
+
+
+# ---------------------------------------------------------------------------
+# Routes — Access Layer (read-only façade)
+# ---------------------------------------------------------------------------
+
+@app.get("/api/access/status")
+async def access_status():
+    return access_layer.get_status()
+
+@app.get("/api/access/snapshot")
+async def access_snapshot(n: int = 100):
+    return {"events": access_layer.snapshot(n)}
+
+@app.get("/api/access/spine")
+async def access_spine_snapshot(n: int = 50):
+    return {"events": access_layer.snapshot_spine(n)}
+
+@app.get("/api/access/memory")
+async def access_memory_snapshot():
+    return {"memories": access_layer.snapshot_memory()}
+
+@app.get("/api/access/fire")
+async def access_fire(n: int = 1):
+    """Pure FIRE score accessor — no state mutation."""
+    return {
+        "n": n,
+        "tau": EveZAccess.tau(n),
+        "omega": EveZAccess.omega(n),
+        "fire": EveZAccess.fire(n),
+    }
+
+@app.get("/api/access/fire/window")
+async def access_fire_window(start: int = 1, end: int = 100):
+    return {"results": access_layer.fire_window(start, end)}
+
+@app.get("/api/access/search/spine")
+async def access_search_spine(q: str = "", n: int = 20):
+    return {"results": access_layer.spine_search(q, n)}
+
+@app.get("/api/access/search/memory")
+async def access_search_memory(q: str = "", n: int = 5):
+    return {"results": access_layer.memory_search(q, n)}
 
 
 # ---------------------------------------------------------------------------
