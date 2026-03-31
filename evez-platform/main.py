@@ -77,7 +77,7 @@ automator: IncomeAutomator = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup/shutdown lifecycle."""
-    global core, models, agent, search_engine, streamer, swarm, provisioner, cognition, access_layer, replicator, metarom, finance, income, quantum, income
+    global core, models, agent, search_engine, streamer, swarm, provisioner, cognition, access_layer, replicator, metarom, finance, income, quantum, automator, income
 
     logger.info("⚡ EVEZ Platform starting...")
     core = EveZCore(DATA_DIR)
