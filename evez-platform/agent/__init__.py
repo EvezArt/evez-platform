@@ -36,7 +36,7 @@ class ModelProvider:
     def __init__(self):
         self.ollama_url = os.environ.get("OLLAMA_URL", "http://localhost:11434")
         self.kilocode_key = os.environ.get("KILOCODE_API_KEY", "")
-        self.kilocode_url = os.environ.get("KILOCODE_API_URL", "https://api.kilo.ai/v1")
+        self.kilocode_url = os.environ.get("KILOCODE_API_URL", "https://api.kilo.ai/api/gateway")
         self._ollama_available = None
         self._last_ollama_check = 0
 
@@ -77,8 +77,8 @@ class ModelProvider:
         # KiloCode models (free tier)
         if self.kilocode_key:
             models.append({
-                "id": "kilo-auto",
-                "name": "KiloCode Auto (Free)",
+                "id": "kilo/auto",
+                "name": "Kilo Auto (Free)",
                 "provider": "kilocode",
                 "local": False,
                 "free": True,
@@ -111,7 +111,7 @@ class ModelProvider:
 
         # KiloCode
         if self.kilocode_key:
-            async for chunk in self._kilocode_chat(messages, model or "kilo-auto", stream):
+            async for chunk in self._kilocode_chat(messages, model or "kilo/auto", stream):
                 yield chunk
             return
 
