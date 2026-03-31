@@ -1,0 +1,113 @@
+{
+  "name": "EVEZ Trunk Webhook",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "evez-fire",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "EVEZ Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Route based on action type\nconst action = $input.first().json.action || 'execute';\nconst prompt = $input.first().json.prompt || '';\nconst context = $input.first().json.context || {};\n\nreturn [{\n  json: {\n    action,\n    prompt,\n    context,\n    timestamp: new Date().toISOString(),\n    source: 'evez-trunk'\n  }\n}];"
+      },
+      "id": "router",
+      "name": "Route Action",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [470, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8080/api/cognition/perceive",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "modality",
+              "value": "={{ $json.action === 'research' ? 'text' : 'code' }}"
+            },
+            {
+              "name": "input",
+              "value": "={{ $json.prompt }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cognition-node",
+      "name": "EVEZ Cognition",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [690, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8080/api/trunk/advance",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "objective",
+              "value": "={{ $json.prompt }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "trunk-node",
+      "name": "EVEZ Trunk",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [690, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ status: 'ok', result: $json }) }}"
+      },
+      "id": "respond",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [910, 300]
+    }
+  ],
+  "connections": {
+    "EVEZ Webhook": {
+      "main": [
+        [{"node": "Route Action", "type": "main", "index": 0}]
+      ]
+    },
+    "Route Action": {
+      "main": [
+        [
+          {"node": "EVEZ Cognition", "type": "main", "index": 0},
+          {"node": "EVEZ Trunk", "type": "main", "index": 0}
+        ]
+      ]
+    },
+    "EVEZ Cognition": {
+      "main": [
+        [{"node": "Respond", "type": "main", "index": 0}]
+      ]
+    },
+    "EVEZ Trunk": {
+      "main": [
+        [{"node": "Respond", "type": "main", "index": 0}]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

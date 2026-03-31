@@ -1,25 +1,38 @@
 {
-  "boot_time": 1774956145.9252672,
-  "last_heartbeat": 1774964848.0975347,
-  "heartbeat_count": 51,
+  "boot_time": 1774957370.301334,
+  "last_heartbeat": 1774964872.213621,
+  "heartbeat_count": 53,
   "degradation": "FULL",
   "memories": {
+    "last_boot": {
+      "key": "last_boot",
+      "content": "Booted at 2026-03-31T11:42:50.301992+00:00",
+      "source": "daemon",
+      "created": 1774950147.6981041,
+      "last_accessed": 1774957370.3019984,
+      "strength": 0.14020040705390346,
+      "access_count": 4,
+      "tags": [
+        "boot",
+        "system"
+      ]
+    },
     "pending_tasks": {
       "key": "pending_tasks",
       "content": "Configure API keys for ChatGPT and Perplexity (set via nexus_ctl.py config set)\nStudy EVEZ-OS spine.jsonl format \u2014 understand how to write compatible FIRE events\nStudy MetaROM Rust source \u2014 understand ROM\u2192cognition training flow\nResearch local LLM fallback \u2014 what can this machine run? (answer: nothing GPU-free viable)\nCreate Dockerfile for portable deployment (low priority \u2014 container env detected)",
       "source": "heartbeat",
       "created": 1774950147.715613,
-      "last_accessed": 1774964848.124481,
+      "last_accessed": 1774964872.2446165,
       "strength": 1.0,
-      "access_count": 50,
+      "access_count": 52,
       "tags": [
         "tasks",
         "work"
       ]
     }
   },
-  "events_written": 51,
-  "git_commits": 51,
+  "events_written": 53,
+  "git_commits": 53,
   "errors": 0,
   "version": "0.2.0"
 }
