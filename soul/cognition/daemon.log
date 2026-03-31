@@ -200,9 +200,10 @@
 2026-03-31 12:23:32 [INFO] 💓 Heartbeat #34
 2026-03-31 12:23:32 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.18)
 2026-03-31 12:23:32 [INFO]   📝 2026-03-31.md: 157 lines
-1:42:36 [INFO]   📋 Pending tasks: 5
-2026-03-31 11:42:36 [INFO]   🧠 Local cognition: nominal (no patterns)
-2026-03-31 11:42:36 [INFO]   ✓ Cycle complete (27 events, 27 commits, 2 memories)
+2026-03-31 12:23:32 [INFO]   📦 Auto-committed: 3e22ff1
+2026-03-31 12:23:32 [INFO]   📋 Pending tasks: 6
+2026-03-31 12:23:32 [INFO]   ✓ Cycle complete (34 events, 34 commits, 2 memories)
+s)
 2026-03-31 11:42:36 [INFO] ⚡ MORPHEUS DAEMON shutting down
 2026-03-31 11:42:36 [INFO]   Final commit: 6f09dd6
 2026-03-31 11:42:36 [INFO]   Uptime: 0s | Heartbeats: 27 | Events: 27 | Errors: 0
@@ -474,3 +475,6 @@
 2026-03-31 12:23:32 [INFO] 💓 Heartbeat #34
 2026-03-31 12:23:32 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.18)
 2026-03-31 12:23:32 [INFO]   📝 2026-03-31.md: 157 lines
+2026-03-31 12:23:32 [INFO]   📦 Auto-committed: 3e22ff1
+2026-03-31 12:23:32 [INFO]   📋 Pending tasks: 6
+2026-03-31 12:23:32 [INFO]   ✓ Cycle complete (34 events, 34 commits, 2 memories)
