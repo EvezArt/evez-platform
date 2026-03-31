@@ -45,6 +45,14 @@ MEMORY_DECAY_RATE = 0.95  # memory strength multiplier per cycle
 MEMORY_MIN_STRENGTH = 0.1  # below this, memory is archived
 SPINE_BATCH_SIZE = 10  # max events to write per cycle
 
+# Local cognition engine — the bare-metal node
+sys.path.insert(0, str(WORKSPACE))
+try:
+    from morpheus_local import LocalCognition
+    HAS_LOCAL_COGNITION = True
+except ImportError:
+    HAS_LOCAL_COGNITION = False
+
 
 class DegradationLevel(Enum):
     FULL = "FULL"      # Cloud API available

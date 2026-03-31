@@ -186,3 +186,16 @@
 2026-03-31 11:42:26 [INFO] 💓 Heartbeat #26
 2026-03-31 11:42:26 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.35)
 2026-03-31 11:42:26 [INFO]   📝 2026-03-31.md: 60 lines
+2026-03-31 11:42:26 [INFO]   📦 Auto-committed: 8b5de21
+2026-03-31 11:42:26 [INFO]   📋 Pending tasks: 5
+2026-03-31 11:42:26 [INFO]   ✓ Cycle complete (26 events, 26 commits, 2 memories)
+2026-03-31 11:42:36 [INFO] ============================================================
+2026-03-31 11:42:36 [INFO] ⚡ MORPHEUS DAEMON v0.2.0 booting
+2026-03-31 11:42:36 [INFO]   Workspace: /root/.openclaw/workspace
+2026-03-31 11:42:36 [INFO]   Spine: /root/.openclaw/workspace/soul/cognition/morpheus_spine.jsonl
+2026-03-31 11:42:36 [INFO]   Interval: 300s
+2026-03-31 11:42:36 [INFO]   Degradation: FULL
+2026-03-31 11:42:36 [INFO] ============================================================
+2026-03-31 11:42:36 [INFO] 💓 Heartbeat #27
+2026-03-31 11:42:36 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.43)
+2026-03-31 11:42:36 [INFO]   📝 2026-03-31.md: 60 lines
