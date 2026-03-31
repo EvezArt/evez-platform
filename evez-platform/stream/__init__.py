@@ -165,9 +165,7 @@ class AutonomousStream:
             {"role": "user", "content": f"Think about this topic and share your genuine thought: {topic}"}
         ]
         try:
-            async for chunk in self.models.chat(messages, stream=False):
-                return chunk if chunk else f"💭 Thinking about {topic}..."
-            return f"💭 Contemplating: {topic}..."
+            return await self.models.get_response(messages) or f"💭 Thinking about {topic}..."
         except Exception:
             return f"💭 Contemplating: {topic}..."
 

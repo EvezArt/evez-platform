@@ -146,10 +146,7 @@ Synthesize a comprehensive answer to the query. Use inline citations like [1], [
         ]
 
         try:
-            response = ""
-            async for chunk in self.models.chat(messages, stream=False):
-                response = chunk if chunk else response
-                break
+            response = await self.models.get_response(messages)
             return response or self._format_results_only(query, results)
         except Exception as e:
             logger.error("Synthesis failed: %s", e)
