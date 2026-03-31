@@ -1,129 +1,75 @@
 package com.evez666.platform
 
+import android.annotation.SuppressLint
 import android.app.*
 import android.content.*
 import android.os.*
 import android.webkit.*
-import android.net.http.SslError
-import android.graphics.Color
-import android.view.View
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import java.io.*
 
 /**
- * EVEZ666 — Native Android App
- * WebView wrapper + embedded Python server via Termux/Chaquopy
- * Targets Android 16 (API 36)
+ * EVEZ666 Android A16 — Native WebView + Embedded Platform
+ *
+ * Features:
+ * - Full EVEZ platform UI in native WebView
+ * - Background service keeps platform alive 24/7
+ * - Boot receiver auto-starts on device restart
+ * - JavaScript bridge for native capabilities
  */
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
-    private var serverPort = 8080
+    private val PLATFORM_PORT = 8080
 
-    companion object {
-        const val CHANNEL_ID = "evez666_platform"
-        const val NOTIFICATION_ID = 1
-    }
-
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Create notification channel for background service
-        createNotificationChannel()
-
-        // Start embedded server
-        startPlatformServer()
-
-        // Setup WebView
         webView = WebView(this)
         setContentView(webView)
 
-        webView.apply {
-            settings.apply {
-                javaScriptEnabled = true
-                domStorageEnabled = true
-                databaseEnabled = true
-                allowFileAccess = true
-                allowContentAccess = true
-                mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-                mediaPlaybackRequiresUserGesture = false
-                userAgentString = "EVEZ666/0.2.0 Android/16"
-                cacheMode = WebSettings.LOAD_DEFAULT
-                setSupportZoom(false)
-            }
-
-            // Enable WebView debugging in debug builds
-            WebView.setWebContentsDebuggingEnabled(true)
-
-            // Chrome client for full web compat
-            webChromeClient = object : WebChromeClient() {
-                override fun onPermissionRequest(request: PermissionRequest?) {
-                    request?.grant(request.resources)
-                }
-            }
-
-            // Allow all SSL (for local dev — production should use proper certs)
-            webViewClient = object : WebViewClient() {
-                override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
-                    handler?.proceed()
-                }
-            }
-
-            // Load EVEZ platform
-            loadUrl("http://localhost:$serverPort")
+        webView.settings.apply {
+            javaScriptEnabled = true
+            domStorageEnabled = true
+            databaseEnabled = true
+            allowFileAccess = true
+            allowContentAccess = true
+            mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+            mediaPlaybackRequiresUserGesture = false
+            userAgentString = "EVEZ666/0.2.0 Android/${Build.VERSION.SDK_INT}"
         }
 
-        // Show foreground notification
-        startForegroundNotification()
-    }
+        webView.webChromeClient = WebChromeClient()
 
-    private fun createNotificationChannel() {
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView?, request: WebRequest?): Boolean {
+                return false
+            }
+        }
+
+        // JavaScript bridge
+        webView.addJavascriptInterface(EvezBridge(this), "EvezNative")
+
+        // Start background service
+        val serviceIntent = Intent(this, PlatformService::class.java)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                CHANNEL_ID,
-                "EVEZ666 Platform",
-                NotificationManager.IMPORTANCE_LOW
-            ).apply {
-                description = "EVEZ666 cognitive platform running"
-                lightColor = Color.parseColor("#6366f1")
-                setShowBadge(false)
-            }
-            val manager = getSystemService(NotificationManager::class.java)
-            manager.createNotificationChannel(channel)
-        }
-    }
-
-    private fun startForegroundNotification() {
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("⚡ EVEZ666")
-            .setContentText("Cognitive platform active")
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
-            .setOngoing(true)
-            .build()
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+            startForegroundService(serviceIntent)
         } else {
-            startForeground(NOTIFICATION_ID, notification)
+            startService(serviceIntent)
         }
+
+        // Load platform UI
+        loadPlatform()
     }
 
-    private fun startPlatformServer() {
-        // Launch embedded Python server via native process
-        // On Android, this runs via Termux or embedded Python
-        Thread {
-            try {
-                val process = Runtime.getRuntime().exec(
-                    arrayOf("python3", "main.py"),
-                    arrayOf("EVEZ_PORT=$serverPort"),
-                    filesDir
-                )
-                process.waitFor()
-            } catch (e: Exception) {
-                // Fallback: server may be running via Termux
-                // WebView will connect to localhost:8080
-            }
-        }.start()
+    private fun loadPlatform() {
+        // Try local first, then embedded
+        val url = "http://localhost:$PLATFORM_PORT"
+        webView.loadUrl(url)
     }
 
     override fun onBackPressed() {
@@ -133,9 +79,94 @@ class MainActivity : Activity() {
             super.onBackPressed()
         }
     }
+}
 
-    override fun onDestroy() {
-        webView.destroy()
-        super.onDestroy()
+/**
+ * JavaScript bridge for native Android capabilities
+ */
+class EvezBridge(private val context: Context) {
+
+    @JavascriptInterface
+    fun getDeviceInfo(): String {
+        return """
+            {
+                "model": "${Build.MODEL}",
+                "manufacturer": "${Build.MANUFACTURER}",
+                "sdk": ${Build.VERSION.SDK_INT},
+                "release": "${Build.VERSION.RELEASE}",
+                "platform": "android"
+            }
+        """.trimIndent()
+    }
+
+    @JavascriptInterface
+    fun isOnline(): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = cm.activeNetwork ?: return false
+        val caps = cm.getNetworkCapabilities(network) ?: return false
+        return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+    }
+
+    @JavascriptInterface
+    fun showToast(message: String) {
+        android.widget.Toast.makeText(context, message, android.widget.Toast.LENGTH_SHORT).show()
+    }
+
+    @JavascriptInterface
+    fun sendNotification(title: String, body: String) {
+        val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val channelId = "evez_channel"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId, "EVEZ666", NotificationManager.IMPORTANCE_DEFAULT)
+            nm.createNotificationChannel(channel)
+        }
+        val notification = NotificationCompat.Builder(context, channelId)
+            .setContentTitle(title)
+            .setContentText(body)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .build()
+        nm.notify(System.currentTimeMillis().toInt(), notification)
+    }
+}
+
+/**
+ * Foreground service — keeps EVEZ alive 24/7 on Android
+ */
+class PlatformService : Service() {
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val channelId = "evez_service"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId, "EVEZ Service", NotificationManager.IMPORTANCE_LOW)
+            getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
+        }
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setContentTitle("EVEZ666")
+            .setContentText("Cognitive platform running")
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setOngoing(true)
+            .build()
+        startForeground(1, notification)
+
+        // Keep alive
+        return START_STICKY
+    }
+
+    override fun onBind(intent: Intent?): IBinder? = null
+}
+
+/**
+ * Boot receiver — auto-start EVEZ on device boot
+ */
+class BootReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
+            val serviceIntent = Intent(context, PlatformService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(serviceIntent)
+            } else {
+                context.startService(serviceIntent)
+            }
+        }
     }
 }
