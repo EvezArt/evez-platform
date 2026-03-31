@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  evez-platform:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - evez-data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - EVEZ_PORT=8080
+      - EVEZ_DATA=/app/data
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    restart: unless-stopped
+
+volumes:
+  evez-data:
+  ollama-data:

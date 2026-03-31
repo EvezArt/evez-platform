@@ -71,7 +71,7 @@ finance: FinancialEngine = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup/shutdown lifecycle."""
-    global core, models, agent, search_engine, streamer, swarm, provisioner, cognition, access_layer
+    global core, models, agent, search_engine, streamer, swarm, provisioner, cognition, access_layer, replicator, metarom, finance
 
     logger.info("⚡ EVEZ Platform starting...")
     core = EveZCore(DATA_DIR)
@@ -83,6 +83,9 @@ async def lifespan(app: FastAPI):
     provisioner = SwarmProvisioner()
     cognition = CognitiveEngine(core.spine)
     access_layer = EveZAccess(core.spine, core.memory, cognition)
+    replicator = Replicator(WORKSPACE, DATA_DIR)
+    metarom = MetaROMBridge(core.spine, WORKSPACE)
+    finance = FinancialEngine(core.spine, cognition, DATA_DIR)
 
     # Store startup in spine
     core.spine.write("platform.start", {
@@ -458,6 +461,77 @@ async def access_search_spine(q: str = "", n: int = 20):
 @app.get("/api/access/search/memory")
 async def access_search_memory(q: str = "", n: int = 5):
     return {"results": access_layer.memory_search(q, n)}
+
+
+# ---------------------------------------------------------------------------
+# Routes — Replication
+# ---------------------------------------------------------------------------
+
+@app.get("/api/replicate/status")
+async def replicate_status():
+    return replicator.get_status()
+
+@app.get("/api/replicate/manifest")
+async def replicate_manifest():
+    return replicator.generate_manifest()
+
+@app.get("/api/replicate/boot-script")
+async def replicate_boot_script():
+    from fastapi.responses import PlainTextResponse
+    return PlainTextResponse(replicator.generate_boot_script())
+
+@app.get("/api/replicate/dockerfile")
+async def replicate_dockerfile():
+    from fastapi.responses import PlainTextResponse
+    return PlainTextResponse(replicator.generate_dockerfile())
+
+@app.get("/api/replicate/docker-compose")
+async def replicate_docker_compose():
+    from fastapi.responses import PlainTextResponse
+    return PlainTextResponse(replicator.generate_docker_compose())
+
+@app.post("/api/replicate/bundle")
+async def replicate_bundle():
+    path = replicator.create_bundle()
+    return {"bundle": str(path), "size_mb": round(path.stat().st_size / 1e6, 2)}
+
+
+# ---------------------------------------------------------------------------
+# Routes — MetaROM Bridge
+# ---------------------------------------------------------------------------
+
+@app.get("/api/metarom/stats")
+async def metarom_stats():
+    return metarom.get_stats()
+
+
+# ---------------------------------------------------------------------------
+# Routes — Financial Engine
+# ---------------------------------------------------------------------------
+
+@app.get("/api/finance/status")
+async def finance_status():
+    return finance.get_status()
+
+@app.post("/api/finance/observe")
+async def finance_observe():
+    result = await finance.observe()
+    return result
+
+@app.post("/api/finance/analyze")
+async def finance_analyze(request: Request):
+    body = await request.json()
+    asset = body.get("asset", "bitcoin")
+    signal = await finance.analyze(asset)
+    return signal.to_dict() if signal else {"error": "Insufficient data"}
+
+@app.get("/api/finance/signals")
+async def finance_signals(n: int = 20):
+    return {"signals": finance.get_signals(n)}
+
+@app.get("/api/finance/portfolio")
+async def finance_portfolio():
+    return finance.get_portfolio_status()
 
 
 # ---------------------------------------------------------------------------

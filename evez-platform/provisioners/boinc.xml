@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<project>
+  <name>evez-swarm</name>
+  <long_name>EVEZ Cognitive Compute Swarm</long_name>
+  <description>Volunteer compute for cognitive architecture research</description>
+  <workunit>
+    <name>evez_sim</name>
+    <rsc_fpops_est>1e12</rsc_fpops_est>
+    <rsc_memory_bound>500000000</rsc_memory_bound>
+  </workunit>
+</project>

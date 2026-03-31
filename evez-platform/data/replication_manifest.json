@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "created": "2026-03-31T11:39:41.218799+00:00",
+  "source_host": "28694d2a74de28",
+  "workspace": "/root/.openclaw/workspace",
+  "components": {
+    "platform": "/root/.openclaw/workspace/evez-platform",
+    "daemon": "/root/.openclaw/workspace/morpheus_daemon.py",
+    "spine": "/root/.openclaw/workspace/soul/cognition/morpheus_spine.jsonl",
+    "memory": "/root/.openclaw/workspace/MEMORY.md",
+    "soul": "/root/.openclaw/workspace/SOUL.md"
+  },
+  "requirements": [
+    "python3 >= 3.10",
+    "pip",
+    "git"
+  ],
+  "optional": [
+    "ollama (for local models)",
+    "nvidia-cuda (for GPU compute)"
+  ],
+  "ports": {
+    "platform": 8080,
+    "daemon": 8081
+  },
+  "auto_boot": true
+}

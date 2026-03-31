@@ -1,0 +1,26 @@
+# EVEZ Compute Swarm — GitHub Actions
+name: EVEZ Swarm
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  compute-tick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: System Info
+        run: |
+          echo "CPUs: $(nproc)"
+          echo "RAM: $(free -h | awk '/Mem:/{print $2}')"
+      - name: EVEZ Compute Tick
+        run: |
+          python3 -c "
+          import json, time, os
+          print(json.dumps({'ts': time.time(), 'cpus': os.cpu_count()}, indent=2))
+          "
+      - name: Report
+        run: echo "Swarm heartbeat complete"

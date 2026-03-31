@@ -517,7 +517,29 @@ class MorpheusDaemon:
                 tags=["tasks", "work"]
             )
 
-        # 6. Save state
+        # 6. Local cognition — bare-metal pattern detection
+        if HAS_LOCAL_COGNITION:
+            try:
+                local_cog = LocalCognition()
+                patterns = local_cog.think()
+                if patterns:
+                    self.log.info("  🧠 Local cognition: %d pattern(s)", len(patterns))
+                    for p in patterns[:3]:
+                        self.log.info("    [%s] %s", p.pattern_type, p.description[:80])
+                    # Log first pattern as spine observation
+                    if patterns[0].confidence > 0.7:
+                        self.spine.write_event("cognition.local_pattern", {
+                            "pattern_type": patterns[0].pattern_type,
+                            "confidence": patterns[0].confidence,
+                            "description": patterns[0].description,
+                            "escalate": local_cog.should_escalate(patterns),
+                        }, confidence=patterns[0].confidence, tags=["cognition", "local", "pattern"])
+                else:
+                    self.log.info("  🧠 Local cognition: nominal (no patterns)")
+            except Exception as e:
+                self.log.warning("  🧠 Local cognition error: %s", e)
+
+        # 7. Save state
         self.state.save(STATE_FILE)
 
         self.log.info("  ✓ Cycle complete (%d events, %d commits, %d memories)",
