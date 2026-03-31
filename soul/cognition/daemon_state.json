@@ -1,0 +1,38 @@
+{
+  "boot_time": 1774950147.6974297,
+  "last_heartbeat": 1774950147.6982644,
+  "heartbeat_count": 1,
+  "degradation": "FULL",
+  "memories": {
+    "last_boot": {
+      "key": "last_boot",
+      "content": "Booted at 2026-03-31T09:42:27.698098+00:00",
+      "source": "daemon",
+      "created": 1774950147.6981041,
+      "last_accessed": 1774950147.6981041,
+      "strength": 0.95,
+      "access_count": 0,
+      "tags": [
+        "boot",
+        "system"
+      ]
+    },
+    "pending_tasks": {
+      "key": "pending_tasks",
+      "content": "Build morpheus_daemon.py \u2014 the actual Python daemon loop\nStudy EVEZ-OS spine.jsonl format \u2014 understand how to write compatible FIRE events\nStudy MetaROM Rust source \u2014 understand ROM\u2192cognition training flow\nResearch local LLM fallback \u2014 what can this machine run?\nDesign systemd service definition",
+      "source": "heartbeat",
+      "created": 1774950147.715613,
+      "last_accessed": 1774950147.715613,
+      "strength": 1.0,
+      "access_count": 0,
+      "tags": [
+        "tasks",
+        "work"
+      ]
+    }
+  },
+  "events_written": 1,
+  "git_commits": 1,
+  "errors": 0,
+  "version": "0.2.0"
+}
