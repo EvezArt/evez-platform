@@ -68,6 +68,7 @@ access_layer: EveZAccess = None
 replicator: Replicator = None
 metarom: MetaROMBridge = None
 finance: FinancialEngine = None
+income: IncomeEngine = None
 
 
 @asynccontextmanager

@@ -179,10 +179,10 @@
 2026-03-31 12:03:31 [INFO]   📦 Auto-committed: 72aa32a
 2026-03-31 12:03:31 [INFO]   📋 Pending tasks: 6
 2026-03-31 12:03:31 [INFO]   ✓ Cycle complete (30 events, 30 commits, 2 memories)
-.md: 60 lines
-2026-03-31 11:38:31 [INFO]   📦 Auto-committed: 45e5571
-2026-03-31 11:38:31 [INFO]   📋 Pending tasks: 5
-2026-03-31 11:38:31 [INFO]   ✓ Cycle complete (25 events, 25 commits, 2 memories)
+2026-03-31 12:08:31 [INFO] 💓 Heartbeat #31
+2026-03-31 12:08:31 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.21)
+2026-03-31 12:08:31 [INFO]   📝 2026-03-31.md: 157 lines
+ts, 2 memories)
 2026-03-31 11:42:26 [INFO] 💓 Heartbeat #26
 2026-03-31 11:42:26 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.35)
 2026-03-31 11:42:26 [INFO]   📝 2026-03-31.md: 60 lines
@@ -367,3 +367,18 @@
 2026-03-31 12:07:50 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.39)
 2026-03-31 12:07:50 [INFO]   📝 2026-03-31.md: 157 lines
 2026-03-31 12:07:50 [INFO]   📝 2026-03-31.md: 157 lines
+2026-03-31 12:07:50 [INFO]   📦 Auto-committed: 8d27ece
+2026-03-31 12:07:50 [INFO]   📦 Auto-committed: 8d27ece
+2026-03-31 12:07:50 [INFO]   📋 Pending tasks: 6
+2026-03-31 12:07:50 [INFO]   📋 Pending tasks: 6
+2026-03-31 12:07:50 [INFO]   🧠 Local cognition: 2 pattern(s)
+2026-03-31 12:07:50 [INFO]   🧠 Local cognition: 2 pattern(s)
+2026-03-31 12:07:50 [INFO]     [distribution_shift] 'memory_formation' proportion shifted 592% (1.1% → 7.8%)
+2026-03-31 12:07:50 [INFO]     [distribution_shift] 'memory_formation' proportion shifted 592% (1.1% → 7.8%)
+2026-03-31 12:07:50 [INFO]     [distribution_shift] 'observation' proportion shifted 296% (1.1% → 4.4%)
+2026-03-31 12:07:50 [INFO]     [distribution_shift] 'observation' proportion shifted 296% (1.1% → 4.4%)
+2026-03-31 12:07:50 [INFO]   ✓ Cycle complete (33 events, 33 commits, 2 memories)
+2026-03-31 12:07:50 [INFO]   ✓ Cycle complete (33 events, 33 commits, 2 memories)
+2026-03-31 12:08:31 [INFO] 💓 Heartbeat #31
+2026-03-31 12:08:31 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.21)
+2026-03-31 12:08:31 [INFO]   📝 2026-03-31.md: 157 lines
