@@ -468,9 +468,10 @@
 2026-03-31 16:03:35 [INFO]   📦 Auto-committed: 0ce0525
 2026-03-31 16:03:35 [INFO]   📋 Pending tasks: 6
 2026-03-31 16:03:35 [INFO]   ✓ Cycle complete (78 events, 78 commits, 1 memories)
-0 [INFO]     [distribution_shift] 'observation' proportion shifted 296% (1.0% → 4.0%)
-2026-03-31 12:17:50 [INFO]   ✓ Cycle complete (35 events, 35 commits, 2 memories)
-2026-03-31 12:17:50 [INFO]   ✓ Cycle complete (35 events, 35 commits, 2 memories)
+2026-03-31 16:08:35 [INFO] 💓 Heartbeat #79
+2026-03-31 16:08:35 [INFO]   Strongest memories: pending_tasks(0.95)
+2026-03-31 16:08:35 [INFO]   📝 2026-03-31.md: 393 lines
+26-03-31 12:17:50 [INFO]   ✓ Cycle complete (35 events, 35 commits, 2 memories)
 2026-03-31 12:18:32 [INFO] 💓 Heartbeat #33
 2026-03-31 12:18:32 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.19)
 2026-03-31 12:18:32 [INFO]   📝 2026-03-31.md: 157 lines
@@ -1759,3 +1760,16 @@
 2026-03-31 16:07:54 [INFO]   Strongest memories: pending_tasks(0.95)
 2026-03-31 16:07:54 [INFO]   📝 2026-03-31.md: 393 lines
 2026-03-31 16:07:54 [INFO]   📝 2026-03-31.md: 393 lines
+2026-03-31 16:07:54 [INFO]   📦 Auto-committed: b749d4c
+2026-03-31 16:07:54 [INFO]   📦 Auto-committed: b749d4c
+2026-03-31 16:07:54 [INFO]   📋 Pending tasks: 6
+2026-03-31 16:07:54 [INFO]   📋 Pending tasks: 6
+2026-03-31 16:07:54 [INFO]   🧠 Local cognition: 1 pattern(s)
+2026-03-31 16:07:54 [INFO]   🧠 Local cognition: 1 pattern(s)
+2026-03-31 16:07:54 [INFO]     [stuck_memory] Memory store repeating identical content hash (76d75a0d8f43b413) 15 times
+2026-03-31 16:07:54 [INFO]     [stuck_memory] Memory store repeating identical content hash (76d75a0d8f43b413) 15 times
+2026-03-31 16:07:54 [INFO]   ✓ Cycle complete (81 events, 81 commits, 1 memories)
+2026-03-31 16:07:54 [INFO]   ✓ Cycle complete (81 events, 81 commits, 1 memories)
+2026-03-31 16:08:35 [INFO] 💓 Heartbeat #79
+2026-03-31 16:08:35 [INFO]   Strongest memories: pending_tasks(0.95)
+2026-03-31 16:08:35 [INFO]   📝 2026-03-31.md: 393 lines
