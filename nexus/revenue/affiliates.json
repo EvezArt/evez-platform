@@ -1,0 +1,44 @@
+[
+  {
+    "program": "OpenAI Affiliate",
+    "product": "ChatGPT Plus / API",
+    "commission": "$5-20 per referral",
+    "url": "https://openai.com/affiliates",
+    "integration": "Add referral link in nexus docs"
+  },
+  {
+    "program": "DigitalOcean Referral",
+    "product": "Cloud VPS hosting",
+    "commission": "$25 per referral",
+    "url": "https://www.digitalocean.com/referral-program",
+    "integration": "Include DO referral link in vps-deploy.sh"
+  },
+  {
+    "program": "Vultr Referral",
+    "product": "Cloud VPS hosting",
+    "commission": "$10-50 per referral",
+    "url": "https://www.vultr.com/referral",
+    "integration": "Include in deployment docs"
+  },
+  {
+    "program": "Hetzner Referral",
+    "product": "Dedicated/cloud servers",
+    "commission": "\u20ac10-20 per referral",
+    "url": "https://www.hetzner.com/referral-program",
+    "integration": "Include in deployment docs"
+  },
+  {
+    "program": "Perplexity Pro Referral",
+    "product": "Perplexity Pro subscription",
+    "commission": "Credits per referral",
+    "url": "https://perplexity.ai/pro",
+    "integration": "Add to nexus provider docs"
+  },
+  {
+    "program": "GitHub Copilot Referral",
+    "product": "AI pair programming",
+    "commission": "Credits per referral",
+    "url": "https://github.com/features/copilot",
+    "integration": "Add to developer workflow docs"
+  }
+]

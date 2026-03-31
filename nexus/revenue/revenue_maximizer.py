@@ -26,13 +26,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional, List, Dict, Any
 
-import sys
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from income_engine import IncomeEngine
-
-
 WORKSPACE = Path("/root/.openclaw/workspace")
 REVENUE_DIR = WORKSPACE / "nexus" / "revenue"
+
+
+def _get_engine():
+    """Lazy import to avoid circular import issues."""
+    import importlib
+    mod = importlib.import_module("nexus.income_engine")
+    return mod.IncomeEngine()
 
 
 class RevenueMaximizer:
@@ -40,8 +42,14 @@ class RevenueMaximizer:
 
     def __init__(self):
         REVENUE_DIR.mkdir(parents=True, exist_ok=True)
-        self.engine = IncomeEngine()
+        self._engine = None
         self.streams = self._load_streams()
+
+    @property
+    def engine(self):
+        if self._engine is None:
+            self._engine = _get_engine()
+        return self._engine
 
     def _load_streams(self) -> dict:
         streams_file = REVENUE_DIR / "streams.json"

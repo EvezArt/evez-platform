@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Solana Foundation Grants",
+    "url": "https://solana.org/grants",
+    "amount": "$5,000 - $250,000",
+    "focus": "Solana ecosystem tools, infrastructure, education",
+    "deadline": "Rolling",
+    "fit_score": 0.7,
+    "action": "Apply with nexus as a Solana-native AI agent platform",
+    "scanned": "2026-03-31T13:06:24.308093+00:00"
+  },
+  {
+    "name": "Gitcoin Grants (Ethereum)",
+    "url": "https://grants.gitcoin.co",
+    "amount": "Variable (quadratic funding)",
+    "focus": "Public goods, open source, infrastructure",
+    "deadline": "Rounds quarterly",
+    "fit_score": 0.8,
+    "action": "Register nexus as public good, participate in next round",
+    "scanned": "2026-03-31T13:06:24.308113+00:00"
+  },
+  {
+    "name": "Protocol Labs Grants",
+    "url": "https://grants.protocol.ai",
+    "amount": "$5,000 - $50,000",
+    "focus": "Decentralized systems, IPFS, Filecoin ecosystem",
+    "deadline": "Rolling",
+    "fit_score": 0.5,
+    "action": "Position nexus memory system as decentralized knowledge graph",
+    "scanned": "2026-03-31T13:06:24.308115+00:00"
+  },
+  {
+    "name": "Ethereum Foundation Ecosystem Support",
+    "url": "https://esp.ethereum.foundation",
+    "amount": "$10,000 - $500,000",
+    "focus": "Ethereum ecosystem tools, education, community",
+    "deadline": "Rolling",
+    "fit_score": 0.4,
+    "action": "Apply if nexus adds Ethereum provider",
+    "scanned": "2026-03-31T13:06:24.308117+00:00"
+  },
+  {
+    "name": "SBIR/STTR (US Government)",
+    "url": "https://www.sbir.gov",
+    "amount": "$50,000 - $1,500,000",
+    "focus": "Innovative technology, small business R&D",
+    "deadline": "Multiple per year per agency",
+    "fit_score": 0.6,
+    "action": "Apply as AI/autonomous systems research",
+    "scanned": "2026-03-31T13:06:24.308118+00:00"
+  },
+  {
+    "name": "AI Safety Fund (various)",
+    "url": "https://www.safety.ai",
+    "amount": "$10,000 - $100,000",
+    "focus": "AI safety, alignment, interpretability",
+    "deadline": "Rolling",
+    "fit_score": 0.5,
+    "action": "Position local cognition + internal verification as safety feature",
+    "scanned": "2026-03-31T13:06:24.308119+00:00"
+  },
+  {
+    "name": "Google.org Impact Challenge",
+    "url": "https://www.google.org/impactchallenge",
+    "amount": "$50,000 - $500,000",
+    "focus": "Technology for social impact",
+    "deadline": "Annual",
+    "fit_score": 0.3,
+    "action": "Frame nexus as democratizing AI access",
+    "scanned": "2026-03-31T13:06:24.308120+00:00"
+  },
+  {
+    "name": "Superteam Earn (Solana)",
+    "url": "https://earn.superteam.fun",
+    "amount": "$500 - $10,000 per bounty",
+    "focus": "Solana ecosystem bounties",
+    "deadline": "Ongoing",
+    "fit_score": 0.8,
+    "action": "Complete Solana-related bounties with nexus-generated code",
+    "scanned": "2026-03-31T13:06:24.308123+00:00"
+  }
+]
