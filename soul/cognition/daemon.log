@@ -191,10 +191,10 @@
 2026-03-31 12:13:31 [INFO]   📦 Auto-committed: c81fd69
 2026-03-31 12:13:31 [INFO]   📋 Pending tasks: 6
 2026-03-31 12:13:31 [INFO]   ✓ Cycle complete (32 events, 32 commits, 2 memories)
- Workspace: /root/.openclaw/workspace
-2026-03-31 11:42:36 [INFO]   Spine: /root/.openclaw/workspace/soul/cognition/morpheus_spine.jsonl
-2026-03-31 11:42:36 [INFO]   Interval: 300s
-2026-03-31 11:42:36 [INFO]   Degradation: FULL
+2026-03-31 12:18:32 [INFO] 💓 Heartbeat #33
+2026-03-31 12:18:32 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.19)
+2026-03-31 12:18:32 [INFO]   📝 2026-03-31.md: 157 lines
+11:42:36 [INFO]   Degradation: FULL
 2026-03-31 11:42:36 [INFO] ============================================================
 2026-03-31 11:42:36 [INFO] 💓 Heartbeat #27
 2026-03-31 11:42:36 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.43)
@@ -429,3 +429,20 @@
 2026-03-31 12:17:50 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.35)
 2026-03-31 12:17:50 [INFO]   📝 2026-03-31.md: 157 lines
 2026-03-31 12:17:50 [INFO]   📝 2026-03-31.md: 157 lines
+2026-03-31 12:17:50 [INFO]   📦 Auto-committed: 25ea4b2
+2026-03-31 12:17:50 [INFO]   📦 Auto-committed: 25ea4b2
+2026-03-31 12:17:50 [INFO]   📋 Pending tasks: 6
+2026-03-31 12:17:50 [INFO]   📋 Pending tasks: 6
+2026-03-31 12:17:50 [INFO]   🧠 Local cognition: 3 pattern(s)
+2026-03-31 12:17:50 [INFO]   🧠 Local cognition: 3 pattern(s)
+2026-03-31 12:17:50 [INFO]     [stuck_memory] Memory store repeating identical content hash (76d75a0d8f43b413) 15 times
+2026-03-31 12:17:50 [INFO]     [stuck_memory] Memory store repeating identical content hash (76d75a0d8f43b413) 15 times
+2026-03-31 12:17:50 [INFO]     [distribution_shift] 'memory_formation' proportion shifted 593% (1.0% → 7.0%)
+2026-03-31 12:17:50 [INFO]     [distribution_shift] 'memory_formation' proportion shifted 593% (1.0% → 7.0%)
+2026-03-31 12:17:50 [INFO]     [distribution_shift] 'observation' proportion shifted 296% (1.0% → 4.0%)
+2026-03-31 12:17:50 [INFO]     [distribution_shift] 'observation' proportion shifted 296% (1.0% → 4.0%)
+2026-03-31 12:17:50 [INFO]   ✓ Cycle complete (35 events, 35 commits, 2 memories)
+2026-03-31 12:17:50 [INFO]   ✓ Cycle complete (35 events, 35 commits, 2 memories)
+2026-03-31 12:18:32 [INFO] 💓 Heartbeat #33
+2026-03-31 12:18:32 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.19)
+2026-03-31 12:18:32 [INFO]   📝 2026-03-31.md: 157 lines
