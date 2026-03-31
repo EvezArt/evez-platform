@@ -197,10 +197,10 @@
 2026-03-31 12:18:32 [INFO]   📦 Auto-committed: f8818cf
 2026-03-31 12:18:32 [INFO]   📋 Pending tasks: 6
 2026-03-31 12:18:32 [INFO]   ✓ Cycle complete (33 events, 33 commits, 2 memories)
-FO]   Strongest memories: pending_tasks(0.95), last_boot(0.43)
-2026-03-31 11:42:36 [INFO]   📝 2026-03-31.md: 60 lines
-2026-03-31 11:42:36 [INFO]   📦 Auto-committed: 2dd66bf
-2026-03-31 11:42:36 [INFO]   📋 Pending tasks: 5
+2026-03-31 12:23:32 [INFO] 💓 Heartbeat #34
+2026-03-31 12:23:32 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.18)
+2026-03-31 12:23:32 [INFO]   📝 2026-03-31.md: 157 lines
+1:42:36 [INFO]   📋 Pending tasks: 5
 2026-03-31 11:42:36 [INFO]   🧠 Local cognition: nominal (no patterns)
 2026-03-31 11:42:36 [INFO]   ✓ Cycle complete (27 events, 27 commits, 2 memories)
 2026-03-31 11:42:36 [INFO] ⚡ MORPHEUS DAEMON shutting down
@@ -461,3 +461,16 @@ FO]   Strongest memories: pending_tasks(0.95), last_boot(0.43)
 2026-03-31 12:22:50 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.34)
 2026-03-31 12:22:50 [INFO]   📝 2026-03-31.md: 157 lines
 2026-03-31 12:22:50 [INFO]   📝 2026-03-31.md: 157 lines
+2026-03-31 12:22:50 [INFO]   📦 Auto-committed: 6463086
+2026-03-31 12:22:50 [INFO]   📦 Auto-committed: 6463086
+2026-03-31 12:22:50 [INFO]   📋 Pending tasks: 6
+2026-03-31 12:22:50 [INFO]   📋 Pending tasks: 6
+2026-03-31 12:22:50 [INFO]   🧠 Local cognition: 1 pattern(s)
+2026-03-31 12:22:50 [INFO]   🧠 Local cognition: 1 pattern(s)
+2026-03-31 12:22:50 [INFO]     [stuck_memory] Memory store repeating identical content hash (76d75a0d8f43b413) 15 times
+2026-03-31 12:22:50 [INFO]     [stuck_memory] Memory store repeating identical content hash (76d75a0d8f43b413) 15 times
+2026-03-31 12:22:50 [INFO]   ✓ Cycle complete (36 events, 36 commits, 2 memories)
+2026-03-31 12:22:50 [INFO]   ✓ Cycle complete (36 events, 36 commits, 2 memories)
+2026-03-31 12:23:32 [INFO] 💓 Heartbeat #34
+2026-03-31 12:23:32 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.18)
+2026-03-31 12:23:32 [INFO]   📝 2026-03-31.md: 157 lines
