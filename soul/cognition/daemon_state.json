@@ -1,17 +1,17 @@
 {
-  "boot_time": 1774956145.9252672,
-  "last_heartbeat": 1774956145.9262106,
+  "boot_time": 1774950209.8921645,
+  "last_heartbeat": 1774956211.2635627,
   "heartbeat_count": 22,
   "degradation": "FULL",
   "memories": {
     "last_boot": {
       "key": "last_boot",
-      "content": "Booted at 2026-03-31T11:22:25.926005+00:00",
+      "content": "Booted at 2026-03-31T09:43:29.892770+00:00",
       "source": "daemon",
       "created": 1774950147.6981041,
-      "last_accessed": 1774956145.926013,
-      "strength": 0.4355616262881147,
-      "access_count": 2,
+      "last_accessed": 1774950209.8927763,
+      "strength": 0.34056162628811465,
+      "access_count": 1,
       "tags": [
         "boot",
         "system"
@@ -19,10 +19,10 @@
     },
     "pending_tasks": {
       "key": "pending_tasks",
-      "content": "Study EVEZ-OS spine.jsonl format \u2014 understand how to write compatible FIRE events\nStudy MetaROM Rust source \u2014 understand ROM\u2192cognition training flow\nResearch local LLM fallback \u2014 what can this machine run? (answer: nothing GPU-free viable)\nCreate Dockerfile for portable deployment (low priority \u2014 container env detected)",
+      "content": "Study EVEZ-OS spine.jsonl format \u2014 understand how to write compatible FIRE events\nStudy MetaROM Rust source \u2014 understand ROM\u2192cognition training flow\nResearch local LLM fallback \u2014 what can this machine run? (answer: nothing GPU-free viable)\nCreate Dockerfile for portable deployment (low priority \u2014 container env detected)\nFormalize Tier 19 causal density estimator with Petri nets (ADR-005)",
       "source": "heartbeat",
       "created": 1774950147.715613,
-      "last_accessed": 1774956145.949972,
+      "last_accessed": 1774956211.2836282,
       "strength": 1.0,
       "access_count": 21,
       "tags": [

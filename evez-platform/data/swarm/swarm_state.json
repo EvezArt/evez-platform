@@ -9,7 +9,7 @@
       "ram_gb": 2.9,
       "gpu": "",
       "status": "online",
-      "last_heartbeat": 1774956079.231813,
+      "last_heartbeat": 1774956333.49127,
       "tasks_completed": 0,
       "capabilities": [
         "shell",
@@ -23,5 +23,5 @@
   ],
   "pending_tasks": 0,
   "completed_tasks": 0,
-  "updated": "2026-03-31T11:21:19.231942+00:00"
+  "updated": "2026-03-31T11:25:33.491438+00:00"
 }

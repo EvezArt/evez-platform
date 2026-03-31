@@ -65,7 +65,7 @@ access_layer: EveZAccess = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup/shutdown lifecycle."""
-    global core, models, agent, search_engine, streamer, swarm, provisioner
+    global core, models, agent, search_engine, streamer, swarm, provisioner, cognition, access_layer
 
     logger.info("⚡ EVEZ Platform starting...")
     core = EveZCore(DATA_DIR)
