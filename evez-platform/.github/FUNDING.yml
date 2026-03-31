@@ -1,0 +1,46 @@
+name: EVEZ Sponsors & Revenue
+description: |
+  ⚡ Support the EVEZ ecosystem — autonomous AI that never sleeps.
+  
+  Your sponsorship funds:
+  - 24/7 compute infrastructure
+  - Open-source agent development
+  - Free platform for everyone
+
+tiers:
+  - name: ⚡ Spark
+    monthly: 5
+    description: "Supporter badge + early access to new modules"
+    benefits:
+      - Sponsor badge on profile
+      - Early access to new agent templates
+      - Priority issue responses
+
+  - name: 🔥 Blaze
+    monthly: 25
+    description: "Premium agent templates + priority support"
+    benefits:
+      - Everything in Spark
+      - All premium agent templates
+      - Custom agent configuration
+      - Discord priority channel
+
+  - name: 💎 Core
+    monthly: 100
+    description: "Custom agent builds + direct support"
+    benefits:
+      - Everything in Blaze
+      - Custom agent built for your use case
+      - Monthly 1:1 strategy call
+      - Source code access to premium modules
+      - Deploy assistance
+
+  - name: 🏴‍☠️ Sovereign
+    monthly: 500
+    description: "Full platform deployment + ongoing optimization"
+    benefits:
+      - Everything in Core
+      - Full EVEZ deployment on your infrastructure
+      - Ongoing optimization and monitoring
+      - Revenue share on agents we build for you
+      - White-label rights
