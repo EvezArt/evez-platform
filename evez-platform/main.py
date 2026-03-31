@@ -40,6 +40,7 @@ from quantum import QuantumManifoldHub
 from automator import IncomeAutomator
 from trunk import Trunk, ChatGPTConnector, PerplexityConnector, N8NConnector
 from emergent import EmergentCognition
+from integration import MasterIntegration
 from finance.wallet import EVEZWallet
 from finance.debt_resolver import DebtResolver
 from income.daily_engine import DailyIncomeEngine
@@ -79,6 +80,7 @@ quantum: QuantumManifoldHub = None
 automator: IncomeAutomator = None
 trunk: Trunk = None
 emergent: EmergentCognition = None
+integration: MasterIntegration = None
 wallet: EVEZWallet = None
 debt: DebtResolver = None
 daily_income: DailyIncomeEngine = None
