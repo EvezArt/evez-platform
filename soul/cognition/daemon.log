@@ -212,10 +212,10 @@
 2026-03-31 12:33:32 [INFO] 💓 Heartbeat #36
 2026-03-31 12:33:32 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.17)
 2026-03-31 12:33:32 [INFO]   📝 2026-03-31.md: 215 lines
-: /root/.openclaw/workspace
-2026-03-31 11:42:50 [INFO]   Workspace: /root/.openclaw/workspace
-2026-03-31 11:42:50 [INFO]   Spine: /root/.openclaw/workspace/soul/cognition/morpheus_spine.jsonl
-2026-03-31 11:42:50 [INFO]   Spine: /root/.openclaw/workspace/soul/cognition/morpheus_spine.jsonl
+2026-03-31 12:33:32 [INFO]   📦 Auto-committed: 95d38d7
+2026-03-31 12:33:32 [INFO]   📋 Pending tasks: 6
+2026-03-31 12:33:32 [INFO]   ✓ Cycle complete (36 events, 36 commits, 2 memories)
+026-03-31 11:42:50 [INFO]   Spine: /root/.openclaw/workspace/soul/cognition/morpheus_spine.jsonl
 2026-03-31 11:42:50 [INFO]   Interval: 300s
 2026-03-31 11:42:50 [INFO]   Interval: 300s
 2026-03-31 11:42:50 [INFO]   Degradation: FULL
@@ -531,3 +531,9 @@
 2026-03-31 12:33:32 [INFO] 💓 Heartbeat #36
 2026-03-31 12:33:32 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.17)
 2026-03-31 12:33:32 [INFO]   📝 2026-03-31.md: 215 lines
+2026-03-31 12:33:32 [INFO]   📦 Auto-committed: 95d38d7
+2026-03-31 12:33:32 [INFO]   📋 Pending tasks: 6
+2026-03-31 12:33:32 [INFO]   ✓ Cycle complete (36 events, 36 commits, 2 memories)
+2026-03-31 12:37:27 [INFO] 💓 Heartbeat #37
+2026-03-31 12:37:27 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.20)
+2026-03-31 12:37:27 [INFO]   📝 2026-03-31.md: 215 lines

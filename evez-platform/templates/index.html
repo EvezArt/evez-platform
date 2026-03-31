@@ -81,13 +81,14 @@
                 </div>
                 <div id="chat-input-area">
                     <div class="input-wrapper">
+                        <button id="voice-btn" class="btn-voice" title="Voice input" onclick="nativeStartListening()">🎤</button>
                         <textarea id="chat-input" placeholder="Message EVEZ..." rows="1" autofocus></textarea>
                         <button id="send-btn" class="btn-send" title="Send">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
                         </button>
                     </div>
                     <div class="input-hints">
-                        <span>⚡ EVEZ runs local-first — install <a href="https://ollama.ai" target="_blank">Ollama</a> for free models</span>
+                        <span>⚡ EVEZ runs local-first — <span id="speech-status"></span></span>
                     </div>
                 </div>
             </div>
