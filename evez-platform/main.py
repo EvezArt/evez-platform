@@ -39,6 +39,7 @@ from income import IncomeEngine
 from quantum import QuantumManifoldHub
 from automator import IncomeAutomator
 from trunk import Trunk, ChatGPTConnector, PerplexityConnector, N8NConnector
+from emergent import EmergentCognition
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -74,12 +75,13 @@ income: IncomeEngine = None
 quantum: QuantumManifoldHub = None
 automator: IncomeAutomator = None
 trunk: Trunk = None
+emergent: EmergentCognition = None
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup/shutdown lifecycle."""
-    global core, models, agent, search_engine, streamer, swarm, provisioner, cognition, access_layer, replicator, metarom, finance, income, quantum, automator, trunk, income
+    global core, models, agent, search_engine, streamer, swarm, provisioner, cognition, access_layer, replicator, metarom, finance, income, quantum, automator, trunk, emergent, income
 
     logger.info("⚡ EVEZ Platform starting...")
     core = EveZCore(DATA_DIR)
@@ -109,6 +111,9 @@ async def lifespan(app: FastAPI):
         trunk.register_surface("perplexity", PerplexityConnector(os.environ["PERPLEXITY_API_KEY"]))
     if os.environ.get("N8N_WEBHOOK_URL"):
         trunk.register_surface("n8n", N8NConnector(os.environ["N8N_WEBHOOK_URL"]))
+
+    # Initialize emergent cognition
+    emergent = EmergentCognition(core.spine)
     income = IncomeEngine(core.spine, cognition, DATA_DIR / "income")
 
     # Store startup in spine
@@ -691,6 +696,81 @@ async def trunk_advance(request: Request):
         return {"error": "No objective provided"}
     result = await trunk.advance(objective)
     return result
+
+
+# ---------------------------------------------------------------------------
+# Routes — Emergent Cognition (quantum interference states)
+# ---------------------------------------------------------------------------
+
+@app.get("/api/emergent/status")
+async def emergent_status():
+    return emergent.get_state()
+
+@app.post("/api/emergent/process")
+async def emergent_process(request: Request):
+    body = await request.json()
+    result = emergent.process(
+        context=body.get("context", "general"),
+        action=body.get("action", "default"),
+        options=body.get("options", []),
+        raw_signal=body.get("signal"),
+    )
+    return result
+
+@app.get("/api/emergent/diagnostic")
+async def emergent_diagnostic():
+    return emergent.meta.get_self_diagnostic()
+
+@app.get("/api/emergent/next-actions")
+async def emergent_next_actions():
+    return {"actions": emergent.temporal.get_next_actions()}
+
+@app.get("/api/emergent/project")
+async def emergent_project(hours: int = 24):
+    return {"projected": emergent.temporal.project_future(hours)}
+
+
+# ---------------------------------------------------------------------------
+# Routes — Full System Graph
+# ---------------------------------------------------------------------------
+
+@app.get("/api/system/graph")
+async def system_graph():
+    """Expose current system topology — all modules, all connections."""
+    return {
+        "platform": "EVEZ",
+        "version": "0.5.1",
+        "modules": {
+            "core": {"status": "online", "description": "Spine, Memory, Conversations"},
+            "agent": {"status": "online", "description": "KiloCode API, tool-calling"},
+            "search": {"status": "online", "description": "Web search + AI synthesis"},
+            "stream": {"status": "online", "description": "24/7 autonomous broadcast"},
+            "cognition": {"status": "online", "description": "Invariance Battery"},
+            "access": {"status": "online", "description": "Read-only façade"},
+            "swarm": {"status": "online", "description": "Compute swarm"},
+            "replicate": {"status": "online", "description": "Self-replication"},
+            "metarom": {"status": "online", "description": "ROM cognition bridge"},
+            "finance": {"status": "online", "description": "Market analysis"},
+            "income": {"status": "online", "description": "Income automation"},
+            "quantum": {"status": "online", "description": "TDSE + Grover routing"},
+            "automator": {"status": "online", "description": "Executable income tasks"},
+            "trunk": {"status": "online", "description": "Cross-surface bus"},
+            "emergent": {"status": "online", "description": "Meta-cognition + learning + temporal"},
+        },
+        "surfaces": {
+            "chatgpt": {"role": "skeptic", "status": "ready"},
+            "claude": {"role": "architect", "status": "ready"},
+            "perplexity": {"role": "recon", "status": "ready"},
+            "n8n": {"role": "executor", "status": "ready"},
+            "android": {"role": "mobile", "status": "ready"},
+        },
+        "cron": {
+            "watchdog": "every 5 min",
+            "income_scan": "every 6 hours",
+            "auto_commit": "every 30 min",
+        },
+        "spine_events": core.spine._event_count,
+    }
 
 
 # ---------------------------------------------------------------------------
