@@ -177,7 +177,7 @@ class FinancialEngine:
     async def analyze(self, asset: str) -> Optional[TradeSignal]:
         """Analyze an asset and generate a trade signal."""
         history = self.price_history.get(asset, [])
-        if len(history) < 5:
+        if len(history) < 2:
             return None
 
         prices = [h.price_usd for h in history[-20:]]
