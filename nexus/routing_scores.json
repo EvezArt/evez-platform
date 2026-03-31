@@ -1,5 +1,8 @@
 {
   "routine": {
+    "openclaw": 0.5950000000000001
+  },
+  "general": {
     "openclaw": 0.55
   }
 }

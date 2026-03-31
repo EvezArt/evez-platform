@@ -1,0 +1,2 @@
+{"ts": "2026-03-31T11:51:44.058666+00:00", "pattern_type": "distribution_shift", "confidence": 0.85, "description": "'memory_formation' proportion shifted 300% (1.4% \u2192 5.8%)", "evidence": ["type=memory_formation", "before=0.014", "after=0.058"], "action": null}
+{"ts": "2026-03-31T11:51:44.207108+00:00", "pattern_type": "distribution_shift", "confidence": 0.85, "description": "'memory_formation' proportion shifted 492% (1.4% \u2192 8.5%)", "evidence": ["type=memory_formation", "before=0.014", "after=0.085"], "action": null}

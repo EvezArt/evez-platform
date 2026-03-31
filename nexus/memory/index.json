@@ -9,7 +9,7 @@
       "content_hash": "3f0a377ba0a4a460",
       "tags": [],
       "metadata": {},
-      "strength": 0.98
+      "strength": 0.9603999999999999
     },
     "30855419265a8326": {
       "id": "30855419265a8326",
@@ -20,7 +20,7 @@
       "content_hash": "e67938238049eebf",
       "tags": [],
       "metadata": {},
-      "strength": 1.0
+      "strength": 0.98
     },
     "25a1265f57a4c0fa": {
       "id": "25a1265f57a4c0fa",
@@ -39,6 +39,47 @@
         "latency_ms": 82.57317543029785,
         "query_hash": "e67938238049"
       },
+      "strength": 0.98
+    },
+    "60b15f4549b3d7c9": {
+      "id": "60b15f4549b3d7c9",
+      "timestamp": "2026-03-31T11:51:43.951530+00:00",
+      "provider": "nexus",
+      "role": "user",
+      "content": "Hello nexus, are you alive?",
+      "content_hash": "e5aaae942b8c4f43",
+      "tags": [],
+      "metadata": {},
+      "strength": 0.98
+    },
+    "23ac7b81e18117c4": {
+      "id": "23ac7b81e18117c4",
+      "timestamp": "2026-03-31T11:51:44.215410+00:00",
+      "provider": "openclaw",
+      "role": "assistant",
+      "content": "\ud83e\udde0 Local cognition detected patterns:\n\n  \u2022 [distribution_shift] 'memory_formation' proportion shifted 492% (1.4% \u2192 8.5%)",
+      "content_hash": "9398b3b543b8e4ce",
+      "tags": [
+        "routine",
+        "openclaw"
+      ],
+      "metadata": {
+        "model": "local-cognition",
+        "tokens_used": 0,
+        "latency_ms": 81.89606666564941,
+        "query_hash": "e67938238049"
+      },
+      "strength": 1.0
+    },
+    "03f74ffbf41d74e1": {
+      "id": "03f74ffbf41d74e1",
+      "timestamp": "2026-03-31T11:51:44.100379+00:00",
+      "provider": "nexus",
+      "role": "user",
+      "content": "daemon self-check",
+      "content_hash": "e67938238049eebf",
+      "tags": [],
+      "metadata": {},
       "strength": 1.0
     }
   },
@@ -48,8 +89,12 @@
     ],
     "default": [
       "30855419265a8326",
-      "25a1265f57a4c0fa"
+      "25a1265f57a4c0fa",
+      "60b15f4549b3d7c9",
+      "23ac7b81e18117c4",
+      "03f74ffbf41d74e1",
+      "23ac7b81e18117c4"
     ]
   },
-  "updated": "2026-03-31T11:50:22.509402+00:00"
+  "updated": "2026-03-31T11:51:44.249425+00:00"
 }

@@ -1,0 +1,1 @@
+{"timestamp": "2026-03-31T11:51:44.100293+00:00", "query": "Hello nexus, are you alive?", "response": "\ud83e\udde0 Local cognition detected patterns:\n\n  \u2022 [distribution_shift] 'memory_formation' proportion shifted 300% (1.4% \u2192 5.8%)", "provider": "openclaw", "model": "local-cognition", "latency_ms": 79.0092945098877}
