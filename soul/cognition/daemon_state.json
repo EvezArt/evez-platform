@@ -1,17 +1,17 @@
 {
-  "boot_time": 1774957370.301334,
-  "last_heartbeat": 1774957670.3683665,
-  "heartbeat_count": 29,
+  "boot_time": 1774950209.8921645,
+  "last_heartbeat": 1774957711.587248,
+  "heartbeat_count": 27,
   "degradation": "FULL",
   "memories": {
     "last_boot": {
       "key": "last_boot",
-      "content": "Booted at 2026-03-31T11:42:50.301992+00:00",
+      "content": "Booted at 2026-03-31T09:43:29.892770+00:00",
       "source": "daemon",
       "created": 1774950147.6981041,
-      "last_accessed": 1774957370.3019984,
-      "strength": 0.4801564283842384,
-      "access_count": 4,
+      "last_accessed": 1774950209.8927763,
+      "strength": 0.263520094465742,
+      "access_count": 1,
       "tags": [
         "boot",
         "system"
@@ -22,17 +22,17 @@
       "content": "Study EVEZ-OS spine.jsonl format \u2014 understand how to write compatible FIRE events\nStudy MetaROM Rust source \u2014 understand ROM\u2192cognition training flow\nResearch local LLM fallback \u2014 what can this machine run? (answer: nothing GPU-free viable)\nCreate Dockerfile for portable deployment (low priority \u2014 container env detected)\nFormalize Tier 19 causal density estimator with Petri nets (ADR-005)",
       "source": "heartbeat",
       "created": 1774950147.715613,
-      "last_accessed": 1774957670.3879886,
+      "last_accessed": 1774957711.6069422,
       "strength": 1.0,
-      "access_count": 28,
+      "access_count": 26,
       "tags": [
         "tasks",
         "work"
       ]
     }
   },
-  "events_written": 29,
-  "git_commits": 29,
+  "events_written": 27,
+  "git_commits": 27,
   "errors": 0,
   "version": "0.2.0"
 }

@@ -1,0 +1,13 @@
+[2026-03-31 11:50:22] [INFO] ============================================================
+[2026-03-31 11:50:22] [INFO] ⚡ NEXUS DAEMON v0.1.0 booting (PID 3926)
+[2026-03-31 11:50:22] [INFO]   Workspace: /root/.openclaw/workspace
+[2026-03-31 11:50:22] [INFO]   Interval: 300s
+[2026-03-31 11:50:22] [INFO]   Providers: openclaw
+[2026-03-31 11:50:22] [INFO]   Serve mode: False (port 8877)
+[2026-03-31 11:50:22] [INFO] ============================================================
+[2026-03-31 11:50:22] [INFO] 🔄 Cycle #1
+[2026-03-31 11:50:22] [INFO]   🧠 Local: ⚡ OpenClaw bridge active. Message logged to spine. Local cognition: nominal. 2 m
+[2026-03-31 11:50:22] [INFO]   ✓ Cycle complete | 3 memories | 2 conversations
+[2026-03-31 11:50:22] [INFO] ⚡ NEXUS DAEMON shutting down
+[2026-03-31 11:50:22] [INFO]   Uptime: 0s | Cycles: 1 | Chats: 0 | Errors: 0
+[2026-03-31 11:50:22] [INFO] Goodbye. ⚡

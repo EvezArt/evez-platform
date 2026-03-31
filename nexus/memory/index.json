@@ -1,0 +1,55 @@
+{
+  "entries": {
+    "3ba8971ada760de5": {
+      "id": "3ba8971ada760de5",
+      "timestamp": "2026-03-31T11:49:29.543976+00:00",
+      "provider": "test",
+      "role": "user",
+      "content": "test message",
+      "content_hash": "3f0a377ba0a4a460",
+      "tags": [],
+      "metadata": {},
+      "strength": 0.98
+    },
+    "30855419265a8326": {
+      "id": "30855419265a8326",
+      "timestamp": "2026-03-31T11:50:22.358488+00:00",
+      "provider": "nexus",
+      "role": "user",
+      "content": "daemon self-check",
+      "content_hash": "e67938238049eebf",
+      "tags": [],
+      "metadata": {},
+      "strength": 1.0
+    },
+    "25a1265f57a4c0fa": {
+      "id": "25a1265f57a4c0fa",
+      "timestamp": "2026-03-31T11:50:22.474917+00:00",
+      "provider": "openclaw",
+      "role": "assistant",
+      "content": "\u26a1 OpenClaw bridge active. Message logged to spine. Local cognition: nominal. 2 messages in buffer.",
+      "content_hash": "c0c2969f2ee96fa5",
+      "tags": [
+        "routine",
+        "openclaw"
+      ],
+      "metadata": {
+        "model": "local-cognition",
+        "tokens_used": 0,
+        "latency_ms": 82.57317543029785,
+        "query_hash": "e67938238049"
+      },
+      "strength": 1.0
+    }
+  },
+  "conversations": {
+    "test": [
+      "3ba8971ada760de5"
+    ],
+    "default": [
+      "30855419265a8326",
+      "25a1265f57a4c0fa"
+    ]
+  },
+  "updated": "2026-03-31T11:50:22.509402+00:00"
+}
