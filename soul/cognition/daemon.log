@@ -501,9 +501,10 @@
 2026-03-31 16:33:35 [INFO] 💓 Heartbeat #84
 2026-03-31 16:33:35 [INFO]   Strongest memories: pending_tasks(0.95)
 2026-03-31 16:33:35 [INFO]   📝 2026-03-31.md: 487 lines
-50 [INFO]   ✓ Cycle complete (36 events, 36 commits, 2 memories)
-2026-03-31 12:22:50 [INFO]   ✓ Cycle complete (36 events, 36 commits, 2 memories)
-2026-03-31 12:23:32 [INFO] 💓 Heartbeat #34
+2026-03-31 16:33:35 [INFO]   📦 Auto-committed: 1b1d419
+2026-03-31 16:33:35 [INFO]   📋 Pending tasks: 6
+2026-03-31 16:33:35 [INFO]   ✓ Cycle complete (84 events, 84 commits, 1 memories)
+#34
 2026-03-31 12:23:32 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.18)
 2026-03-31 12:23:32 [INFO]   📝 2026-03-31.md: 157 lines
 2026-03-31 12:23:32 [INFO]   📦 Auto-committed: 3e22ff1
@@ -1916,3 +1917,9 @@
 2026-03-31 16:33:35 [INFO] 💓 Heartbeat #84
 2026-03-31 16:33:35 [INFO]   Strongest memories: pending_tasks(0.95)
 2026-03-31 16:33:35 [INFO]   📝 2026-03-31.md: 487 lines
+2026-03-31 16:33:35 [INFO]   📦 Auto-committed: 1b1d419
+2026-03-31 16:33:35 [INFO]   📋 Pending tasks: 6
+2026-03-31 16:33:35 [INFO]   ✓ Cycle complete (84 events, 84 commits, 1 memories)
+2026-03-31 16:37:30 [INFO] 💓 Heartbeat #85
+2026-03-31 16:37:30 [INFO]   Strongest memories: pending_tasks(0.95)
+2026-03-31 16:37:30 [INFO]   📝 2026-03-31.md: 487 lines
