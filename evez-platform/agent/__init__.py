@@ -97,36 +97,26 @@ class ModelProvider:
         return models
 
     async def chat(self, messages: List[Dict[str, str]], model: str = None,
-                   stream: bool = False) -> AsyncGenerator[str, None] | str:
-        """Send chat completion, auto-selecting provider."""
+                   stream: bool = False):
+        """Send chat completion, auto-selecting provider. Always an async generator."""
 
         # Determine provider from model name
         if model and not model.startswith("kilo"):
             # Ollama model
             if await self.is_ollama_up():
                 async for chunk in self._ollama_chat(messages, model, stream):
-                    if stream:
-                        yield chunk
-                    else:
-                        return chunk
+                    yield chunk
                 return
             model = None  # Fallback
 
         # KiloCode
         if self.kilocode_key:
             async for chunk in self._kilocode_chat(messages, model or "kilo-auto", stream):
-                if stream:
-                    yield chunk
-                else:
-                    return chunk
+                yield chunk
             return
 
         # Stub response
-        response = "⚠️ No model available. Install Ollama (`curl -fsSL https://ollama.ai/install.sh | sh && ollama pull llama3.2`) or configure a cloud API key."
-        if stream:
-            yield response
-        else:
-            return response
+        yield "⚠️ No model available. Install Ollama (`curl -fsSL https://ollama.ai/install.sh | sh && ollama pull llama3.2`) or configure a cloud API key."
 
     async def _ollama_chat(self, messages, model, stream):
         payload = {
@@ -148,7 +138,7 @@ class ModelProvider:
             else:
                 r = await client.post(f"{self.ollama_url}/api/chat", json=payload)
                 data = r.json()
-                return data.get("message", {}).get("content", "")
+                yield data.get("message", {}).get("content", "")
 
     async def _kilocode_chat(self, messages, model, stream):
         headers = {
@@ -180,7 +170,14 @@ class ModelProvider:
                 r = await client.post(f"{self.kilocode_url}/chat/completions",
                                       json=payload, headers=headers)
                 data = r.json()
-                return data.get("choices", [{}])[0].get("message", {}).get("content", "")
+                yield data.get("choices", [{}])[0].get("message", {}).get("content", "")
+
+    async def get_response(self, messages: List[Dict[str, str]], model: str = None) -> str:
+        """Get a single response string (non-streaming convenience)."""
+        result = ""
+        async for chunk in self.chat(messages, model=model, stream=False):
+            result += chunk if chunk else ""
+        return result
 
 
 # ---------------------------------------------------------------------------
@@ -328,7 +325,7 @@ class Agent:
 
     async def run(self, user_message: str, model: str = None,
                   conversation_id: str = None,
-                  stream: bool = False) -> AsyncGenerator[str, None] | str:
+                  stream: bool = False):
         """Run the agent loop with tool calling."""
 
         # Build conversation context
@@ -350,10 +347,7 @@ class Agent:
         full_response = ""
         for step in range(self.max_steps):
             # Get model response
-            response_text = ""
-            async for chunk in self.models.chat(messages, model=model, stream=False):
-                response_text = chunk if not isinstance(chunk, type(None)) else response_text
-                break
+            response_text = await self.models.get_response(messages, model=model)
 
             if not response_text:
                 response_text = "I couldn't process that. Please check your model configuration."
