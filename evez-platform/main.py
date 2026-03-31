@@ -82,6 +82,7 @@ automator: IncomeAutomator = None
 trunk: Trunk = None
 emergent: EmergentCognition = None
 integration: MasterIntegration = None
+proof: AGIProofSurface = None
 wallet: EVEZWallet = None
 debt: DebtResolver = None
 daily_income: DailyIncomeEngine = None
@@ -90,7 +91,7 @@ daily_income: DailyIncomeEngine = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup/shutdown lifecycle."""
-    global core, models, agent, search_engine, streamer, swarm, provisioner, cognition, access_layer, replicator, metarom, finance, income, quantum, automator, trunk, emergent, integration, income, wallet, debt, daily_income
+    global core, models, agent, search_engine, streamer, swarm, provisioner, cognition, access_layer, replicator, metarom, finance, income, quantum, automator, trunk, emergent, integration, proof, income, wallet, debt, daily_income
 
     logger.info("⚡ EVEZ Platform starting...")
     core = EveZCore(DATA_DIR)
@@ -126,6 +127,9 @@ async def lifespan(app: FastAPI):
 
     # Initialize master integration (bridges all EvezArt repos)
     integration = MasterIntegration(WORKSPACE, core.spine)
+
+    # Initialize AGI proof surface
+    proof = AGIProofSurface(core.spine, DATA_DIR / "proof")
     income = IncomeEngine(core.spine, cognition, DATA_DIR / "income")
 
     # Initialize wallet and debt resolver
@@ -965,6 +969,28 @@ async def integration_repo_file(repo: str, path: str = ""):
 @app.post("/api/integration/{repo}/sync")
 async def integration_sync_repo(repo: str):
     return integration.sync_repo(repo)
+
+
+# ---------------------------------------------------------------------------
+# Routes — AGI Proof Surface
+# ---------------------------------------------------------------------------
+
+@app.get("/api/proof/status")
+async def proof_status():
+    return proof.get_state()
+
+@app.get("/api/proof/verify")
+async def proof_verify():
+    return proof.verify()
+
+@app.post("/api/proof/capture")
+async def proof_capture():
+    snap = proof.capture(
+        agent_count=len(integration.bridges) if integration else 0,
+        events=core.spine._event_count,
+    )
+    proof.optimize()
+    return snap.to_dict()
 
 
 # ---------------------------------------------------------------------------
