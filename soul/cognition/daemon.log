@@ -478,3 +478,6 @@ s)
 2026-03-31 12:23:32 [INFO]   📦 Auto-committed: 3e22ff1
 2026-03-31 12:23:32 [INFO]   📋 Pending tasks: 6
 2026-03-31 12:23:32 [INFO]   ✓ Cycle complete (34 events, 34 commits, 2 memories)
+2026-03-31 12:27:26 [INFO] 💓 Heartbeat #35
+2026-03-31 12:27:26 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.22)
+2026-03-31 12:27:26 [INFO]   📝 2026-03-31.md: 170 lines
