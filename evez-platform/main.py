@@ -42,6 +42,7 @@ from trunk import Trunk, ChatGPTConnector, PerplexityConnector, N8NConnector
 from emergent import EmergentCognition
 from finance.wallet import EVEZWallet
 from finance.debt_resolver import DebtResolver
+from income.daily_engine import DailyIncomeEngine
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -80,12 +81,13 @@ trunk: Trunk = None
 emergent: EmergentCognition = None
 wallet: EVEZWallet = None
 debt: DebtResolver = None
+daily_income: DailyIncomeEngine = None
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup/shutdown lifecycle."""
-    global core, models, agent, search_engine, streamer, swarm, provisioner, cognition, access_layer, replicator, metarom, finance, income, quantum, automator, trunk, emergent, income, wallet, debt
+    global core, models, agent, search_engine, streamer, swarm, provisioner, cognition, access_layer, replicator, metarom, finance, income, quantum, automator, trunk, emergent, income, wallet, debt, daily_income
 
     logger.info("⚡ EVEZ Platform starting...")
     core = EveZCore(DATA_DIR)
@@ -123,6 +125,7 @@ async def lifespan(app: FastAPI):
     # Initialize wallet and debt resolver
     wallet = EVEZWallet(DATA_DIR / "wallet")
     debt = DebtResolver(DATA_DIR / "debt")
+    daily_income = DailyIncomeEngine(DATA_DIR / "income")
 
     # Store startup in spine
     core.spine.write("platform.start", {
@@ -711,6 +714,43 @@ async def debt_bayesian(request: Request):
     """Bayesian income update from observed data."""
     body = await request.json()
     return debt.bayesian_income_update(body.get("incomes", []))
+
+
+# ---------------------------------------------------------------------------
+# Routes — Daily Income Engine ($100/day)
+# ---------------------------------------------------------------------------
+
+@app.get("/api/daily/status")
+async def daily_status():
+    return daily_income.get_status()
+
+@app.get("/api/daily/runbook")
+async def daily_runbook():
+    """Today's execution plan to hit $100."""
+    return daily_income.get_daily_runbook()
+
+@app.get("/api/daily/projection")
+async def daily_projection():
+    """30-day income projection."""
+    return daily_income.get_projection()
+
+@app.post("/api/daily/log")
+async def daily_log(request: Request):
+    """Log earnings from a source."""
+    body = await request.json()
+    daily_income.log_earnings(
+        source_name=body["source"],
+        amount=body["amount"],
+        hours=body.get("hours", 0),
+    )
+    return {"status": "logged", "source": body["source"], "amount": body["amount"]}
+
+@app.post("/api/daily/signup")
+async def daily_signup(request: Request):
+    """Update signup status for a source."""
+    body = await request.json()
+    daily_income.update_signup_status(body["source"], body["status"])
+    return {"status": "updated"}
 
 
 # ---------------------------------------------------------------------------
