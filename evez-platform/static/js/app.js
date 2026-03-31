@@ -10,6 +10,70 @@ let currentModel = null;
 let isStreaming = false;
 
 // ---------------------------------------------------------------------------
+// Native Speech (Android A16 bridge)
+// ---------------------------------------------------------------------------
+
+const hasNativeSpeech = typeof window.EVEZNative !== 'undefined';
+const hasNativeSTT = typeof window.EVEZNative !== 'undefined' && typeof window.EVEZNative.startListening === 'function';
+
+function nativeSpeak(text) {
+    if (hasNativeSpeech) {
+        window.EVEZNative.speak(text);
+    } else if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.05;
+        utterance.pitch = 0.95;
+        speechSynthesis.speak(utterance);
+    }
+}
+
+function nativeStopSpeaking() {
+    if (hasNativeSpeech) {
+        window.EVEZNative.stopSpeaking();
+    } else if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+    }
+}
+
+function nativeStartListening() {
+    if (hasNativeSTT) {
+        window.EVEZNative.startListening();
+    } else if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.onresult = (event) => {
+            const text = event.results[0][0].transcript;
+            document.getElementById('chat-input').value = text;
+            sendMessage();
+        };
+        recognition.start();
+    }
+}
+
+// Listen for native STT results
+window.addEventListener('evez-stt-result', (event) => {
+    const text = event.detail;
+    document.getElementById('chat-input').value = text;
+    sendMessage();
+});
+
+// Auto-speak assistant responses
+function autoSpeak(text) {
+    // Strip markdown for speech
+    const plain = text.replace(/```[\s\S]*?```/g, '[code block]')
+                      .replace(/\*\*(.*?)\*\*/g, '$1')
+                      .replace(/\[(.*?)\]\(.*?\)/g, '$1')
+                      .replace(/#{1,3}\s/g, '')
+                      .replace(/[|]/g, ' ')
+                      .substring(0, 500);
+    if (plain.length > 10) {
+        nativeSpeak(plain);
+    }
+}
+
+// ---------------------------------------------------------------------------
 // Init
 // ---------------------------------------------------------------------------
 
