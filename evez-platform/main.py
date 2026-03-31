@@ -1,0 +1,319 @@
+"""
+EVEZ Platform — Main API Server
+
+FastAPI backend with SSE streaming, chat, search, agent, and stream endpoints.
+"""
+
+import asyncio
+import json
+import os
+import sys
+import logging
+import time
+from pathlib import Path
+from datetime import datetime, timezone
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI, Request, HTTPException
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse, StreamingResponse, JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from typing import Optional, List, Dict, Any
+from sse_starlette.sse import EventSourceResponse
+
+# Add parent to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from core import EveZCore
+from agent import Agent, ModelProvider
+from search import SearchEngine
+from stream import AutonomousStream
+
+# ---------------------------------------------------------------------------
+# Logging
+# ---------------------------------------------------------------------------
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
+    datefmt="%H:%M:%S",
+)
+logger = logging.getLogger("evez.api")
+
+# ---------------------------------------------------------------------------
+# Global State
+# ---------------------------------------------------------------------------
+
+DATA_DIR = Path(os.environ.get("EVEZ_DATA", "/root/.openclaw/workspace/evez-platform/data"))
+WORKSPACE = Path(os.environ.get("EVEZ_WORKSPACE", "/root/.openclaw/workspace"))
+
+core: EveZCore = None
+models: ModelProvider = None
+agent: Agent = None
+search_engine: SearchEngine = None
+streamer: AutonomousStream = None
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Startup/shutdown lifecycle."""
+    global core, models, agent, search_engine, streamer
+
+    logger.info("⚡ EVEZ Platform starting...")
+    core = EveZCore(DATA_DIR)
+    models = ModelProvider()
+    agent = Agent(core, models)
+    search_engine = SearchEngine(models)
+    streamer = AutonomousStream(core, models, search_engine)
+
+    # Store startup in spine
+    core.spine.write("platform.start", {
+        "version": "0.1.0",
+        "data_dir": str(DATA_DIR),
+    }, tags=["platform", "boot"])
+
+    logger.info("⚡ EVEZ Platform ready — http://localhost:8080")
+    yield
+
+    # Shutdown
+    if streamer and streamer.running:
+        await streamer.stop()
+    core.spine.write("platform.stop", {}, tags=["platform", "shutdown"])
+    logger.info("⚡ EVEZ Platform stopped")
+
+
+# ---------------------------------------------------------------------------
+# App
+# ---------------------------------------------------------------------------
+
+app = FastAPI(title="EVEZ Platform", version="0.1.0", lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Serve static files
+STATIC_DIR = Path(__file__).parent.parent / "static"
+TEMPLATES_DIR = Path(__file__).parent.parent / "templates"
+app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+
+
+# ---------------------------------------------------------------------------
+# Request Models
+# ---------------------------------------------------------------------------
+
+class ChatRequest(BaseModel):
+    message: str
+    model: Optional[str] = None
+    conversation_id: Optional[str] = None
+    stream: bool = True
+
+class SearchRequest(BaseModel):
+    query: str
+    max_results: int = 8
+
+class NewConversationRequest(BaseModel):
+    title: Optional[str] = "New Chat"
+
+
+# ---------------------------------------------------------------------------
+# Routes — Pages
+# ---------------------------------------------------------------------------
+
+@app.get("/", response_class=HTMLResponse)
+async def index():
+    """Serve main UI."""
+    template = TEMPLATES_DIR / "index.html"
+    if template.exists():
+        return HTMLResponse(template.read_text())
+    return HTMLResponse("<h1>EVEZ Platform</h1><p>Templates not found.</p>")
+
+
+# ---------------------------------------------------------------------------
+# Routes — API
+# ---------------------------------------------------------------------------
+
+@app.get("/api/health")
+async def health():
+    return {"status": "ok", "time": datetime.now(timezone.utc).isoformat()}
+
+
+@app.get("/api/models")
+async def list_models():
+    """List available models (free first)."""
+    m = await models.list_models()
+    return {"models": m}
+
+
+@app.post("/api/chat")
+async def chat(req: ChatRequest):
+    """Chat with agent (supports streaming via SSE)."""
+
+    # Create conversation if needed
+    conv_id = req.conversation_id
+    if not conv_id:
+        conv_id = core.conversations.create_conversation(
+            title=req.message[:50] + "..." if len(req.message) > 50 else req.message
+        )
+
+    if req.stream:
+        async def generate():
+            yield f"data: {json.dumps({'type': 'conversation_id', 'id': conv_id})}\n\n"
+
+            try:
+                async for chunk in agent.run(req.message, model=req.model,
+                                            conversation_id=conv_id, stream=True):
+                    if chunk:
+                        yield f"data: {json.dumps({'type': 'content', 'content': chunk})}\n\n"
+                yield f"data: {json.dumps({'type': 'done'})}\n\n"
+            except Exception as e:
+                yield f"data: {json.dumps({'type': 'error', 'error': str(e)})}\n\n"
+
+        return StreamingResponse(generate(), media_type="text/event-stream")
+    else:
+        result = await agent.run(req.message, model=req.model,
+                                 conversation_id=conv_id, stream=False)
+        return {"conversation_id": conv_id, "response": result}
+
+
+@app.post("/api/search")
+async def search(req: SearchRequest):
+    """AI-powered search with citations."""
+    result = await search_engine.research(req.query, req.max_results)
+    return result
+
+
+@app.get("/api/conversations")
+async def list_conversations():
+    """List all conversations."""
+    convs = core.conversations.list_conversations()
+    return {"conversations": convs}
+
+
+@app.get("/api/conversations/{conv_id}")
+async def get_conversation(conv_id: str):
+    """Get conversation messages."""
+    messages = core.conversations.get_messages(conv_id)
+    return {"conversation_id": conv_id, "messages": messages}
+
+
+@app.post("/api/conversations/new")
+async def new_conversation(req: NewConversationRequest):
+    """Create new conversation."""
+    conv_id = core.conversations.create_conversation(req.title)
+    return {"conversation_id": conv_id}
+
+
+@app.get("/api/conversations/{conv_id}/search")
+async def search_conversation(conv_id: str, q: str = ""):
+    """Search within conversation history."""
+    results = core.conversations.search_messages(q)
+    return {"results": results}
+
+
+# ---------------------------------------------------------------------------
+# Routes — Stream
+# ---------------------------------------------------------------------------
+
+@app.post("/api/stream/start")
+async def start_stream():
+    """Start autonomous broadcast."""
+    if streamer.running:
+        return {"status": "already_running", **streamer.get_status()}
+    asyncio.create_task(streamer.start())
+    return {"status": "starting"}
+
+
+@app.post("/api/stream/stop")
+async def stop_stream():
+    """Stop autonomous broadcast."""
+    await streamer.stop()
+    return {"status": "stopped"}
+
+
+@app.get("/api/stream/status")
+async def stream_status():
+    """Get stream status."""
+    return streamer.get_status()
+
+
+@app.get("/api/stream/events")
+async def stream_events(n: int = 20):
+    """Get recent stream events."""
+    return {"events": streamer.get_recent_events(n)}
+
+
+@app.get("/api/stream/live")
+async def stream_live():
+    """SSE endpoint for live stream events."""
+    async def generate():
+        last_count = 0
+        while True:
+            if len(streamer.events) > last_count:
+                for event in streamer.events[last_count:]:
+                    yield f"data: {json.dumps(event.to_dict())}\n\n"
+                last_count = len(streamer.events)
+            await asyncio.sleep(1)
+
+    return EventSourceResponse(generate())
+
+
+# ---------------------------------------------------------------------------
+# Routes — Spine & Memory
+# ---------------------------------------------------------------------------
+
+@app.get("/api/spine")
+async def get_spine(n: int = 50):
+    """Get recent spine events."""
+    return {"events": core.spine.read_recent(n)}
+
+
+@app.get("/api/spine/search")
+async def search_spine(q: str = "", n: int = 20):
+    """Search spine events."""
+    return {"events": core.spine.search(q, n)}
+
+
+@app.get("/api/memory")
+async def get_memory():
+    """Get current memories."""
+    memories = core.memory.strongest(20)
+    return {"memories": [
+        {"key": m.key, "content": m.content[:200], "strength": m.strength,
+         "tags": m.tags, "source": m.source}
+        for m in memories
+    ]}
+
+
+# ---------------------------------------------------------------------------
+# Routes — System
+# ---------------------------------------------------------------------------
+
+@app.get("/api/system/status")
+async def system_status():
+    """Full system status."""
+    model_list = await models.list_models()
+    return {
+        "platform": "EVEZ",
+        "version": "0.1.0",
+        "models": model_list,
+        "ollama": await models.is_ollama_up(),
+        "stream": streamer.get_status(),
+        "spine_events": core.spine._event_count,
+        "conversations": len(core.conversations.list_conversations()),
+        "memories": len(core.memory.memories),
+    }
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("EVEZ_PORT", "8080"))
+    uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")

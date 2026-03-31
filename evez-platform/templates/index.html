@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVEZ — Cognitive Platform</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+<div id="app">
+    <!-- Sidebar -->
+    <aside id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">EVEZ</span>
+            </div>
+            <button id="new-chat-btn" class="btn-primary" title="New Chat">+ New</button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <button class="nav-btn active" data-view="chat">
+                <span class="nav-icon">💬</span> Chat
+            </button>
+            <button class="nav-btn" data-view="search">
+                <span class="nav-icon">🔍</span> Search
+            </button>
+            <button class="nav-btn" data-view="stream">
+                <span class="nav-icon">📡</span> Stream
+            </button>
+            <button class="nav-btn" data-view="spine">
+                <span class="nav-icon">🧠</span> Brain
+            </button>
+        </nav>
+
+        <div class="sidebar-section">
+            <h3>Conversations</h3>
+            <div id="conversation-list" class="conversation-list"></div>
+        </div>
+
+        <div class="sidebar-footer">
+            <div id="model-selector">
+                <label>Model</label>
+                <select id="model-select"><option>Loading...</option></select>
+            </div>
+            <div id="system-status" class="status-indicator">
+                <span class="status-dot"></span>
+                <span class="status-text">Connecting...</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="main">
+        <!-- Chat View -->
+        <div id="view-chat" class="view active">
+            <div id="chat-container">
+                <div id="chat-messages" class="messages">
+                    <div class="welcome">
+                        <h1>⚡ EVEZ</h1>
+                        <p>Cognitive Platform — Free, Local-first, Never-halting</p>
+                        <div class="welcome-grid">
+                            <div class="welcome-card" data-prompt="Search the web for the latest AI news and summarize the top 3 stories">
+                                <span class="card-icon">🔍</span>
+                                <span class="card-text">Research & Search</span>
+                            </div>
+                            <div class="welcome-card" data-prompt="Write a Python script that monitors system resources and alerts on high usage">
+                                <span class="card-icon">💻</span>
+                                <span class="card-text">Code & Build</span>
+                            </div>
+                            <div class="welcome-card" data-prompt="Analyze the current directory structure and suggest improvements">
+                                <span class="card-icon">📁</span>
+                                <span class="card-text">Analyze & Organize</span>
+                            </div>
+                            <div class="welcome-card" data-prompt="Explain how to set up Ollama for free local AI models">
+                                <span class="card-icon">🧠</span>
+                                <span class="card-text">Learn & Explain</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="chat-input-area">
+                    <div class="input-wrapper">
+                        <textarea id="chat-input" placeholder="Message EVEZ..." rows="1" autofocus></textarea>
+                        <button id="send-btn" class="btn-send" title="Send">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+                        </button>
+                    </div>
+                    <div class="input-hints">
+                        <span>⚡ EVEZ runs local-first — install <a href="https://ollama.ai" target="_blank">Ollama</a> for free models</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search View -->
+        <div id="view-search" class="view">
+            <div class="search-view">
+                <div class="search-header">
+                    <h1>🔍 Research Engine</h1>
+                    <p>AI-powered search with citations — Perplexity, but free</p>
+                </div>
+                <div class="search-input-wrapper">
+                    <input type="text" id="search-input" placeholder="Ask anything..." autofocus>
+                    <button id="search-btn" class="btn-primary">Search</button>
+                </div>
+                <div id="search-results" class="search-results"></div>
+            </div>
+        </div>
+
+        <!-- Stream View -->
+        <div id="view-stream" class="view">
+            <div class="stream-view">
+                <div class="stream-header">
+                    <h1>📡 Autonomous Stream</h1>
+                    <p>24/7 AI broadcast — like SureThing.io, but free</p>
+                    <div class="stream-controls">
+                        <button id="stream-toggle" class="btn-primary">Start Stream</button>
+                        <span id="stream-status" class="stream-status-badge">OFFLINE</span>
+                    </div>
+                </div>
+                <div id="stream-feed" class="stream-feed"></div>
+            </div>
+        </div>
+
+        <!-- Spine View -->
+        <div id="view-spine" class="view">
+            <div class="spine-view">
+                <div class="spine-header">
+                    <h1>🧠 Brain — Spine & Memory</h1>
+                    <p>Append-only cognitive spine with decay-based memory</p>
+                    <div class="spine-controls">
+                        <button class="spine-tab active" data-tab="spine-events">Spine Events</button>
+                        <button class="spine-tab" data-tab="memories">Memories</button>
+                    </div>
+                </div>
+                <div id="spine-events" class="spine-tab-content active">
+                    <div id="spine-list" class="event-list"></div>
+                </div>
+                <div id="memories" class="spine-tab-content">
+                    <div id="memory-list" class="memory-list"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>
