@@ -1025,3 +1025,12 @@ n_shift] 'memory_formation' proportion shifted 591% (1.3% → 8.8%)
 2026-03-31 14:02:28 [INFO] 💓 Heartbeat #54
 2026-03-31 14:02:28 [INFO]   Strongest memories: pending_tasks(0.95)
 2026-03-31 14:02:28 [INFO]   📝 2026-03-31.md: 320 lines
+2026-03-31 14:02:28 [INFO]   📦 Auto-committed: 7d730e9
+2026-03-31 14:02:28 [INFO]   📋 Pending tasks: 6
+2026-03-31 14:02:28 [INFO]   ✓ Cycle complete (54 events, 54 commits, 1 memories)
+2026-03-31 14:02:52 [INFO] 💓 Heartbeat #56
+2026-03-31 14:02:52 [INFO] 💓 Heartbeat #56
+2026-03-31 14:02:52 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.12)
+2026-03-31 14:02:52 [INFO]   Strongest memories: pending_tasks(0.95), last_boot(0.12)
+2026-03-31 14:02:52 [INFO]   📝 2026-03-31.md: 320 lines
+2026-03-31 14:02:52 [INFO]   📝 2026-03-31.md: 320 lines
