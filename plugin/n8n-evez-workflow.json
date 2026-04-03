@@ -1,0 +1,46 @@
+{
+  "name": "EVEZ AI Research Pipeline",
+  "description": "Autonomous research pipeline using EVEZ cognitive platform",
+  "nodes": [
+    {
+      "name": "Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "parameters": {"rule": {"interval": [{"field": "hours", "hoursInterval": 6}]}},
+      "position": [250, 300]
+    },
+    {
+      "name": "EVEZ Research",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.evez666.com/v1/research",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {"parameters": [
+          {"name": "topic", "value": "{{ $json.topic }}" }
+        ]},
+        "options": {}
+      },
+      "position": [500, 300]
+    },
+    {
+      "name": "Store Results",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.evez666.com/v1/auth/register",
+        "sendBody": true,
+        "bodyParameters": {"parameters": [
+          {"name": "name", "value": "n8n-workflow"},
+          {"name": "tier", "value": "pro"}
+        ]}
+      },
+      "position": [750, 300]
+    }
+  ],
+  "connections": {
+    "Trigger": {"main": [[{"node": "EVEZ Research", "type": "main", "index": 0}]]},
+    "EVEZ Research": {"main": [[{"node": "Store Results", "type": "main", "index": 0}]]}
+  }
+}

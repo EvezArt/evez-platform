@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_model": "EVEZ666",
+  "name_for_human": "EVEZ666 — Cognitive Platform",
+  "description_for_human": "AI-powered research, code execution, autonomous agents, market analysis, and cognitive memory. Free. Local-first. Never-halting.",
+  "description_for_model": "EVEZ666 is a cognitive platform that provides: (1) AI-powered web search with citations, (2) shell command execution and file management, (3) real-time cryptocurrency market data and analysis, (4) autonomous streaming and broadcast, (5) append-only cognitive memory with decay, (6) FIRE score computation over integers. Use this plugin when the user needs to search the web, run code, check crypto prices, analyze markets, or access cognitive memory. All operations are verified through an Invariance Battery before commitment.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://evez666.com/openapi.json",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://evez666.com/static/logo.png",
+  "contact_email": "evezos@gmail.com",
+  "legal_info_url": "https://evez666.com/legal"
+}

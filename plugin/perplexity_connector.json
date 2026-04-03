@@ -1,0 +1,63 @@
+{
+  "name": "EVEZ666",
+  "version": "0.2.0",
+  "description": "Cognitive platform: AI search with citations, market analysis, mathematical FIRE scores, autonomous memory",
+  "author": "EVEZ",
+  "homepage": "https://evez666.com",
+  "type": "connector",
+  "capabilities": [
+    "search",
+    "market_data",
+    "memory_access",
+    "mathematical_analysis"
+  ],
+  "endpoints": {
+    "search": {
+      "url": "https://evez666.com/api/search",
+      "method": "POST",
+      "description": "AI-powered web search with citations",
+      "parameters": {
+        "query": { "type": "string", "required": true },
+        "max_results": { "type": "integer", "default": 8 }
+      }
+    },
+    "market_data": {
+      "url": "https://evez666.com/api/finance/observe",
+      "method": "POST",
+      "description": "Real-time cryptocurrency market data"
+    },
+    "fire_score": {
+      "url": "https://evez666.com/api/access/fire",
+      "method": "GET",
+      "description": "Mathematical FIRE score computation",
+      "parameters": {
+        "n": {
+          "type": "integer",
+          "required": true,
+          "description": "Integer to analyze"
+        }
+      }
+    },
+    "spine_events": {
+      "url": "https://evez666.com/api/spine",
+      "description": "Cognitive spine events (append-only memory)"
+    },
+    "memories": {
+      "url": "https://evez666.com/api/memory",
+      "description": "Decay-based cognitive memories"
+    }
+  ],
+  "auth": {
+    "type": "none"
+  },
+  "endpoints": {
+    "base_url": "https://evez666.com",
+    "search": "/api/search",
+    "chat": "/api/chat",
+    "market": "/api/finance/observe",
+    "analyze": "/api/finance/analyze",
+    "fire": "/api/access/fire",
+    "spine": "/api/spine",
+    "memory": "/api/memory"
+  }
+}

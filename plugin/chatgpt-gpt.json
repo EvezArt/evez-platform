@@ -1,0 +1,25 @@
+{
+  "name": "EVEZ666",
+  "description": "AI cognitive platform with web search, code execution, market analysis, and autonomous agents.",
+  "instructions": "You have access to the EVEZ666 cognitive platform through custom actions. Use the available actions to: search the web with citations, get cryptocurrency market data, compute mathematical FIRE scores, execute shell commands, read/write files, and access cognitive memory. All operations are free and local-first.",
+  "conversation_starters": [
+    "Search the web for the latest AI agent developments",
+    "Get current Bitcoin, Ethereum, and Solana prices",
+    "Compute FIRE scores for numbers 1 through 50",
+    "What's in my cognitive memory?",
+    "Scan for crypto airdrop opportunities"
+  ],
+  "actions": [
+    {
+      "type": "openapi",
+      "openapi_url": "https://evez666.com/openapi.json",
+      "privacy_policy_url": "https://evez666.com/privacy"
+    }
+  ],
+  "capabilities": {
+    "web_browsing": false,
+    "code_interpreter": true,
+    "image_generation": false,
+    "custom_actions": true
+  }
+}

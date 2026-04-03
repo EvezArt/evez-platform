@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "evez": {
+      "command": "python3",
+      "args": ["/root/.openclaw/workspace/evez-platform/mcp/server.py"],
+      "description": "EVEZ cognitive platform — search, code, markets, memory",
+      "environment": {
+        "EVEZ_DATA": "/root/.openclaw/workspace/evez-platform/data",
+        "EVEZ_WORKSPACE": "/root/.openclaw/workspace"
+      }
+    }
+  }
+}

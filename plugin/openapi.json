@@ -1,0 +1,252 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "EVEZ666 Cognitive Platform API",
+    "description": "Self-evolving AI cognitive platform \u2014 search, code, markets, autonomous agents, and cognitive memory. Free, local-first, never-halting. Replaces ChatGPT ($20/mo), Perplexity ($20/mo), Bloomberg ($2000/mo), and more.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "EVEZ",
+      "email": "evezos@gmail.com",
+      "url": "https://github.com/EvezArt/evez-platform"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "termsOfService": "https://github.com/EvezArt/evez-platform/blob/main/LICENSE"
+  },
+  "servers": [
+    {
+      "url": "https://api.evez666.com",
+      "description": "EVEZ Platform"
+    },
+    {
+      "url": "http://localhost:8080",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/v1/chat/completions": {
+      "post": {
+        "summary": "Chat Completions (OpenAI-compatible)",
+        "description": "AI chat with tool-calling, streaming, and model routing. Drop-in replacement for OpenAI API.",
+        "operationId": "chatCompletions",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "messages"
+                ],
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "description": "Model alias (evez/auto, evez/fast, evez/smart, evez/code)",
+                    "default": "evez/auto"
+                  },
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "temperature": {
+                    "type": "number",
+                    "default": 1.0
+                  },
+                  "max_tokens": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Chat completion response"
+          }
+        }
+      }
+    },
+    "/v1/search": {
+      "post": {
+        "summary": "AI-Powered Search",
+        "description": "Web search with AI synthesis and citations (Perplexity replacement).",
+        "operationId": "search",
+        "responses": {
+          "200": {
+            "description": "Search results with synthesis"
+          }
+        }
+      }
+    },
+    "/v1/analyze": {
+      "post": {
+        "summary": "Multi-Source Analysis",
+        "description": "Deep analysis with Invariance Battery verification.",
+        "operationId": "analyze",
+        "responses": {
+          "200": {
+            "description": "Analysis results"
+          }
+        }
+      }
+    },
+    "/v1/code": {
+      "post": {
+        "summary": "Code Generation & Review",
+        "description": "Generate, review, and optimize code.",
+        "operationId": "code",
+        "responses": {
+          "200": {
+            "description": "Code response"
+          }
+        }
+      }
+    },
+    "/v1/signal": {
+      "post": {
+        "summary": "Crypto Market Signals",
+        "description": "Cryptocurrency market analysis and trade signal generation (Bloomberg replacement).",
+        "operationId": "signal",
+        "responses": {
+          "200": {
+            "description": "Signal response"
+          }
+        }
+      }
+    },
+    "/v1/research": {
+      "post": {
+        "summary": "Deep Research",
+        "description": "Research with citations and synthesized conclusions.",
+        "operationId": "research",
+        "responses": {
+          "200": {
+            "description": "Research results"
+          }
+        }
+      }
+    },
+    "/v1/auth/register": {
+      "post": {
+        "summary": "Register API Key",
+        "description": "Create a new API key for authentication.",
+        "operationId": "registerKey",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "tier": {
+                    "type": "string",
+                    "enum": [
+                      "free",
+                      "basic",
+                      "pro",
+                      "enterprise"
+                    ]
+                  },
+                  "expires_days": {
+                    "type": "integer"
+                  }
+                },
+                "required": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "API key created"
+          }
+        }
+      }
+    },
+    "/v1/payments/create": {
+      "post": {
+        "summary": "Create Crypto Payment Invoice",
+        "description": "Generate crypto payment invoice for subscription tiers.",
+        "operationId": "createPayment",
+        "responses": {
+          "200": {
+            "description": "Invoice created"
+          }
+        }
+      }
+    },
+    "/v1/stripe/checkout": {
+      "post": {
+        "summary": "Create Stripe Checkout",
+        "description": "Create Stripe checkout session for fiat payments.",
+        "operationId": "stripeCheckout",
+        "responses": {
+          "200": {
+            "description": "Checkout session created"
+          }
+        }
+      }
+    },
+    "/v1/health": {
+      "get": {
+        "summary": "Health Check (public)",
+        "description": "System health status.",
+        "operationId": "health",
+        "responses": {
+          "200": {
+            "description": "Healthy"
+          }
+        }
+      }
+    },
+    "/v1/models": {
+      "get": {
+        "summary": "List Models (public)",
+        "description": "Available AI models.",
+        "operationId": "listModels",
+        "responses": {
+          "200": {
+            "description": "Model list"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API Key"
+      },
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    },
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}

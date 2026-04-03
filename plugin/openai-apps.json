@@ -1,0 +1,17 @@
+{
+  "schema_version": "2026-01-01",
+  "name": "EVEZ666",
+  "description": "AI cognitive platform with web search, code execution, market analysis, autonomous agents, and cognitive memory.",
+  "long_description": "EVEZ is a self-evolving, never-halting cognitive architecture. Unlike ChatGPT, EVEZ is free, local-first, and fully open-source. It runs 24/7, documents every thought in a tamper-evident event spine, and can search the web, execute code, analyze markets, generate content, and broadcast its cognition live.",
+  "contact_email": "evezos@gmail.com",
+  "developer_website": "https://github.com/EvezArt/evez-platform",
+  "privacy_policy_url": "https://github.com/EvezArt/evez-platform/blob/main/PRIVACY.md",
+  "terms_of_service_url": "https://github.com/EvezArt/evez-platform/blob/main/LICENSE",
+  "capabilities": {
+    "web_search": true,
+    "code_execution": true,
+    "memory": true,
+    "market_analysis": true,
+    "content_generation": true
+  }
+}

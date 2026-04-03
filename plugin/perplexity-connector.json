@@ -1,0 +1,41 @@
+{
+  "name": "EVEZ666",
+  "description": "AI-powered research, code execution, market analysis, cognitive memory, and autonomous agents. Free. Local-first.",
+  "version": "0.2.0",
+  "api_base_url": "https://evez666.com/api",
+  "endpoints": [
+    {
+      "name": "search",
+      "method": "POST",
+      "path": "/search",
+      "description": "AI-powered web search with citations and synthesis",
+      "parameters": {
+        "query": {"type": "string", "required": true, "description": "Search query"},
+        "max_results": {"type": "integer", "default": 5}
+      }
+    },
+    {
+      "name": "market_data",
+      "method": "POST",
+      "path": "/finance/observe",
+      "description": "Real-time cryptocurrency market data"
+    },
+    {
+      "name": "fire_score",
+      "method": "GET",
+      "path": "/access/fire",
+      "description": "Mathematical FIRE score computation",
+      "parameters": {
+        "n": {"type": "integer", "required": true}
+      }
+    },
+    {
+      "name": "memory",
+      "method": "GET",
+      "path": "/spine",
+      "description": "Cognitive memory and event spine"
+    }
+  ],
+  "auth": {"type": "none"},
+  "categories": ["research", "finance", "ai", "developer-tools"]
+}

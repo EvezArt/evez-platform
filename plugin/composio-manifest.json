@@ -1,0 +1,22 @@
+{
+  "name": "EVEZ666",
+  "version": "2.0.0",
+  "description": "Self-evolving AI cognitive platform — search, code, markets, memory, streaming",
+  "category": "ai-cognitive",
+  "open_api_spec": "https://api.evez666.com/openapi.json",
+  "auth_scheme": "api_key",
+  "base_url": "https://api.evez666.com",
+  "endpoints": [
+    "POST /v1/chat/completions",
+    "POST /v1/search",
+    "POST /v1/analyze",
+    "POST /v1/code",
+    "POST /v1/signal",
+    "POST /v1/research",
+    "GET /v1/health",
+    "GET /v1/models"
+  ],
+  "repository": "https://github.com/EvezArt/evez-platform",
+  "license": "MIT",
+  "tags": ["ai", "research", "code", "markets", "cognitive", "autonomous"]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "EVEZ666",
+  "version": "2.0.0",
+  "description": "Cognitive research, code execution, market analysis, and autonomous agents — all free via EVEZ.",
+  "api_base_url": "https://api.evez666.com/v1",
+  "endpoints": {
+    "search": {"method": "POST", "path": "/search", "description": "AI-powered search with citations"},
+    "chat": {"method": "POST", "path": "/chat/completions", "description": "OpenAI-compatible chat completions"},
+    "analyze": {"method": "POST", "path": "/analyze", "description": "Multi-source analysis with verification"},
+    "signal": {"method": "POST", "path": "/signal", "description": "Crypto market analysis and trade signals"},
+    "research": {"method": "POST", "path": "/research", "description": "Deep research with citations"}
+  },
+  "auth": {"type": "bearer", "header": "Authorization"},
+  "license": "MIT",
+  "open_source": true,
+  "repo": "https://github.com/EvezArt/evez-platform"
+}
