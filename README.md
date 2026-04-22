@@ -1,3 +1,4 @@
+[![Test](https://github.com/EvezArt/evez-platform/actions/workflows/test-matrix.yml/badge.svg)](https://github.com/EvezArt/evez-platform/actions)
 [![EVEZ](https://img.shields.io/badge/EVEZ-Platform-green)](https://github.com/EvezArt/evez-platform)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![npm version](https://img.shields.io/badge/npm-latest-blue)](https://npmjs.com/package/evez-platform)
