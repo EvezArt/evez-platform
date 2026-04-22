@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>evez-orchestrator-dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0e1116;--surface:#171b22;--surface2:#1d2430;--text:#edf2f7;--muted:#9aa6b2;--border:#2a3342;--accent:#4fd1c5;--good:#68d391;--warn:#f6ad55;--bad:#fc8181;
+      --r:16px;--s1:4px;--s2:8px;--s3:12px;--s4:16px;--s6:24px;--s8:32px;
+    }
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:1180px;margin:0 auto;padding:var(--s6)}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+    h1{margin:0;font-size:clamp(28px,5vw,48px);line-height:1.05}
+    .muted{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:24px 0}
+    .card{background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--border);border-radius:var(--r);padding:18px;box-shadow:0 16px 40px rgba(0,0,0,.22)}
+    .kpi{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .num{font-size:36px;font-weight:700;margin-top:8px}
+    .panel{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+    .tasks{display:grid;gap:12px}
+    .task{padding:14px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.02)}
+    .row{display:flex;justify-content:space-between;gap:12px;align-items:center}
+    .badge{padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700}
+    .pending{background:rgba(246,173,85,.14);color:var(--warn)}
+    .running{background:rgba(79,209,197,.14);color:var(--accent)}
+    .done{background:rgba(104,211,145,.14);color:var(--good)}
+    .failed{background:rgba(252,129,129,.14);color:var(--bad)}
+    pre{white-space:pre-wrap;word-break:break-word;background:#0b0e13;padding:14px;border-radius:12px;border:1px solid var(--border);overflow:auto}
+    .toolbar{display:flex;gap:12px;flex-wrap:wrap}
+    button{border:1px solid var(--border);background:var(--surface2);color:var(--text);padding:10px 14px;border-radius:12px}
+    @media (max-width:900px){.grid,.panel{grid-template-columns:1fr}.wrap{padding:16px}.num{font-size:28px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <div class="muted">Single-process execution layer</div>
+        <h1>EVEZ Orchestrator</h1>
+        <p class="muted">Point this dashboard at your JSON state so the UI reflects real task execution instead of session metadata.</p>
+      </div>
+      <div class="toolbar">
+        <button onclick="loadDemo()">Load demo state</button>
+      </div>
+    </div>
+
+    <div class="grid" id="kpis"></div>
+
+    <div class="panel">
+      <section class="card">
+        <div class="row"><h2>Tasks</h2><span class="muted" id="taskCount"></span></div>
+        <div class="tasks" id="tasks"></div>
+      </section>
+      <section class="card">
+        <div class="row"><h2>Live schema</h2><span class="muted">tasks + metrics</span></div>
+        <pre id="schema"></pre>
+      </section>
+    </div>
+  </div>
+  <script>
+    const demo = {
+      metrics:{totals:{pending:1,running:0,done:3,failed:1},lastRunAt:'2026-04-21T12:38:00Z',updatedAt:'2026-04-21T12:38:00Z'},
+      tasks:[
+        {id:'t-104',type:'lead-prototype',status:'pending',createdAt:'2026-04-21T12:37:51Z',input:{name:'Prospect A',context:'manual lead flow'},outputRef:null,error:null},
+        {id:'t-103',type:'summarize-lines',status:'done',createdAt:'2026-04-21T12:37:04Z',outputRef:'results/t-103.json',error:null},
+        {id:'t-102',type:'json-parse',status:'done',createdAt:'2026-04-21T12:36:13Z',outputRef:'results/t-102.json',error:null},
+        {id:'t-101',type:'echo',status:'done',createdAt:'2026-04-21T12:35:22Z',outputRef:'results/t-101.json',error:null},
+        {id:'t-100',type:'json-parse',status:'failed',createdAt:'2026-04-21T12:34:02Z',outputRef:null,error:'Unexpected token'}
+      ]
+    };
+
+    function el(tag, cls, html){ const n=document.createElement(tag); if(cls)n.className=cls; if(html!==undefined)n.innerHTML=html; return n; }
+    function render(data){
+      const totals = data.metrics.totals;
+      const kpis = [
+        ['Done', totals.done, 'done'],
+        ['Pending', totals.pending, 'pending'],
+        ['Failed', totals.failed, 'failed'],
+        ['Updated', new Date(data.metrics.updatedAt).toLocaleTimeString(), 'running']
+      ];
+      const kWrap = document.getElementById('kpis'); kWrap.innerHTML='';
+      kpis.forEach(([label,value,kind])=>{
+        const c=el('div','card'); c.innerHTML=`<div class="kpi">${label}</div><div class="num ${kind}">${value}</div>`; kWrap.appendChild(c);
+      });
+      const tWrap=document.getElementById('tasks'); tWrap.innerHTML='';
+      document.getElementById('taskCount').textContent = `${data.tasks.length} tracked`;
+      data.tasks.forEach(task=>{
+        const card=el('article','task');
+        card.innerHTML=`<div class="row"><strong>${task.type}</strong><span class="badge ${task.status}">${task.status}</span></div>
+        <div class="muted" style="margin-top:8px">${task.id} · ${task.createdAt || ''}</div>
+        <div style="margin-top:10px">${task.outputRef ? `Output: <code>${task.outputRef}</code>` : 'No output file yet'}</div>
+        ${task.error ? `<div style="margin-top:10px;color:var(--bad)">Error: ${task.error}</div>` : ''}`;
+        tWrap.appendChild(card);
+      });
+      document.getElementById('schema').textContent = JSON.stringify({
+        metrics: data.metrics,
+        taskShape: { id:'string', type:'string', input:'any', status:'pending|running|done|failed', createdAt:'iso', startedAt:'iso|null', finishedAt:'iso|null', error:'string|null', outputRef:'string|null' }
+      }, null, 2);
+    }
+    function loadDemo(){ render(demo); }
+    loadDemo();
+  </script>
+</body>
+</html>
