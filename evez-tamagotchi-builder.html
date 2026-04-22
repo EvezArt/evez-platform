@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>EVEZ Master Builder</title>
+ <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=cabinet-grotesk@500,700&display=swap" rel="stylesheet">
+ <style>
+ :root, [data-theme="light"] { --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem); --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem); --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem); --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem); --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem; --space-16: 4rem; --color-bg:#f7f6f2; --color-surface:#f9f8f5; --color-surface-2:#fbfbf9; --color-text:#28251d; --color-text-muted:#7a7974; --color-primary:#01696f; --color-primary-hover:#0c4e54; --color-success:#437a22; --radius-xl:1rem; --shadow-sm: 0 1px 2px rgba(0,0,0,.06); --shadow-md: 0 8px 24px rgba(0,0,0,.12); --font-body:'Satoshi', sans-serif; --font-display:'Cabinet Grotesk', sans-serif; }
+ [data-theme="dark"] { --color-bg:#171614; --color-surface:#1c1b19; --color-surface-2:#201f1d; --color-text:#cdccca; --color-text-muted:#797876; --color-primary:#4f98a3; --color-primary-hover:#227f8b; --color-success:#6daa45; --shadow-sm:0 1px 2px rgba(0,0,0,.2); --shadow-md:0 12px 32px rgba(0,0,0,.4); }
+ *,*::before,*::after{box-sizing:border-box;margin:0;padding:0} html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased} body{font-family:var(--font-body);font-size:var(--text-base);background:radial-gradient(circle at top right, rgba(79,152,163,.12), transparent 30%), var(--color-bg);color:var(--color-text);min-height:100vh;line-height:1.55} a,button,textarea{transition:.18s ease} button{cursor:pointer;border:none;background:none;color:inherit} .shell{display:grid;grid-template-columns:280px 1fr;min-height:100vh} .sidebar{border-right:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);backdrop-filter:blur(12px);padding:var(--space-6);position:sticky;top:0;height:100vh} .brand{display:flex;gap:var(--space-3);align-items:center;margin-bottom:var(--space-8)} .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--color-primary),transparent);display:grid;place-items:center;border:1px solid rgba(255,255,255,.08)} .logo svg{width:22px;height:22px} .brand h1{font-family:var(--font-display);font-size:var(--text-lg);line-height:1.05} .brand p{color:var(--color-text-muted);font-size:var(--text-xs);margin-top:4px} .nav{display:grid;gap:var(--space-2)} .nav a{padding:.82rem 1rem;border-radius:12px;text-decoration:none;color:var(--color-text-muted);font-size:var(--text-sm);border:1px solid transparent} .nav a:hover,.nav a.active{color:var(--color-text);background:var(--color-surface-2);border-color:rgba(255,255,255,.08)} .status-card{margin-top:var(--space-8);padding:var(--space-4);border-radius:var(--radius-xl);background:var(--color-surface);border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow-sm)} .pulse{display:inline-flex;align-items:center;gap:.5rem;font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-3)} .dot{width:10px;height:10px;border-radius:999px;background:var(--color-success);box-shadow:0 0 0 0 rgba(109,170,69,.5);animation:pulse 1.8s infinite} @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(109,170,69,.5)}70%{box-shadow:0 0 0 12px rgba(109,170,69,0)}100%{box-shadow:0 0 0 0 rgba(109,170,69,0)}} .main{padding:var(--space-8)} .topbar{display:flex;justify-content:space-between;align-items:center;gap:var(--space-4);margin-bottom:var(--space-8)} .hero{display:grid;grid-template-columns:1.25fr .95fr;gap:var(--space-6);margin-bottom:var(--space-8)} .panel{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:var(--space-6);box-shadow:var(--shadow-md)} .eyebrow{font-size:var(--text-xs);text-transform:uppercase;letter-spacing:.14em;color:var(--color-primary);margin-bottom:var(--space-3)} h2,h3{font-family:var(--font-display);line-height:1.05} .hero h2{font-size:var(--text-xl);max-width:18ch;margin-bottom:var(--space-4)} .hero p{max-width:62ch;color:var(--color-text-muted);margin-bottom:var(--space-5)} .cta-row{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-5)} .btn{padding:.95rem 1.2rem;border-radius:14px;font-size:var(--text-sm);font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center} .btn-primary{background:var(--color-primary);color:white} .btn-primary:hover{background:var(--color-primary-hover)} .btn-secondary{border:1px solid rgba(255,255,255,.12);background:var(--color-surface-2)} .metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-3)} .metric{padding:var(--space-4);border-radius:18px;background:var(--color-surface);border:1px solid rgba(255,255,255,.08)} .metric span{display:block;color:var(--color-text-muted);font-size:var(--text-xs);margin-bottom:.4rem} .metric strong{font-size:var(--text-lg);font-family:var(--font-display)} .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:var(--space-6);margin-bottom:var(--space-6)} .stack{display:grid;gap:var(--space-6)} .prompt-box{min-height:420px;width:100%;background:#111;border:1px solid rgba(255,255,255,.08);color:#d9f7ef;border-radius:20px;padding:var(--space-5);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;line-height:1.6;resize:vertical} .section-title{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--space-3);margin-bottom:var(--space-4)} .section-title p{color:var(--color-text-muted);font-size:var(--text-sm);max-width:46ch} .cards{display:grid;gap:var(--space-4)} .mini-card{padding:var(--space-4);border-radius:18px;background:var(--color-surface);border:1px solid rgba(255,255,255,.08)} .mini-card h4{font-size:var(--text-base);margin-bottom:.45rem} .mini-card p{color:var(--color-text-muted);font-size:var(--text-sm)} .log{display:grid;gap:var(--space-3);max-height:360px;overflow:auto} .log-item{padding:var(--space-4);background:var(--color-surface);border-radius:16px;border:1px solid rgba(255,255,255,.06)} .log-item small{display:block;color:var(--color-primary);margin-bottom:.35rem;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:.12em} .tamagotchi{display:grid;place-items:center;padding:var(--space-6);min-height:280px;background:linear-gradient(180deg, rgba(79,152,163,.1), transparent), var(--color-surface);border-radius:24px;border:1px solid rgba(255,255,255,.08)} .pet{width:140px;height:140px;border-radius:32px;background:linear-gradient(180deg, rgba(79,152,163,.22), rgba(79,152,163,.05));display:grid;place-items:center;position:relative;border:1px solid rgba(255,255,255,.08);animation:float 3s ease-in-out infinite} .pet_face{font-size:3rem;filter:drop-shadow(0 10px 20px rgba(0,0,0,.25))} @keyframes float{50%{transform:translateY(-10px)}} .pet-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3);width:100%;margin-top:var(--space-4)} .pet-stat{background:var(--color-surface-2);padding:var(--space-3);border-radius:14px;text-align:center} .pet-stat span{display:block;font-size:var(--text-xs);color:var(--color-text-muted)} .pet-stat strong{font-size:var(--text-base)} .footer-note{margin-top:var(--space-6);font-size:var(--text-sm);color:var(--color-text-muted)} .copy-indicator{font-size:var(--text-xs);color:var(--color-success);opacity:0;transform:translateY(4px)} .copy-indicator.show{opacity:1;transform:translateY(0)} @media (max-width: 980px){.shell{grid-template-columns:1fr}.sidebar{position:relative;height:auto;border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}.hero,.grid{grid-template-columns:1fr}.main{padding:var(--space-5)}}
+ </style>
+</head>
+<body>
+ <div class="shell">
+ <aside class="sidebar">
+ <div class="brand"><div class="logo" aria-label="EVEZ logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h12M4 17h16"/><circle cx="18" cy="12" r="2.5" fill="currentColor" stroke="none"/></svg></div><div><h1>EVEZ Master Builder</h1><p>Kilo Builder prompt engine + app blueprint</p></div></div>
+ <nav class="nav" aria-label="Primary"><a href="#overview" class="active">Overview</a><a href="#prompt">One True Prompt</a><a href="#blueprint">App Blueprint</a><a href="#tamagotchi">Phone Worker</a></nav>
+ <div class="status-card"><div class="pulse"><span class="dot"></span> Sandbox evolution loop ready</div><p style="font-size:var(--text-sm);color:var(--color-text-muted)">This app is designed to give you one master prompt that tells Kilo Builder to create a self-improving OpenClaw-like worker app with browser tabs, agent loops, and Tamagotchi supervision.</p></div>
+ </aside>
+ <main class="main">
+ <div class="topbar" id="overview"><div><div class="eyebrow">Builder stack</div><h2 style="font-size:var(--text-lg)">A single prompt that tries to outgrow the tool that generated it</h2></div><button class="btn btn-secondary" id="themeToggle" aria-label="Toggle theme">Toggle theme</button></div>
+ <section class="hero">
+ <div class="panel"><div class="eyebrow">Intent</div><h2>Build a sandboxed AI app that turns OpenClaw into a living phone worker.</h2><p>The target is not a static demo. It is a browser-first worker organism inside Kilo Builder: it manages tasks, opens nested browser workspaces, evolves prompts, simulates self-repair, and feels like a Tamagotchi guardian for autonomous labor.</p><div class="cta-row"><button class="btn btn-primary" id="copyPromptBtn">Copy master prompt</button><a class="btn btn-secondary" href="#prompt">Jump to prompt</a></div><div class="copy-indicator" id="copyIndicator">Copied to clipboard.</div></div>
+ <div class="panel"><div class="eyebrow">System targets</div><div class="metrics"><div class="metric"><span>Runtime mode</span><strong>Sandbox-first</strong></div><div class="metric"><span>Core pattern</span><strong>Agent swarm</strong></div><div class="metric"><span>Phone role</span><strong>Tamagotchi control</strong></div><div class="metric"><span>Growth path</span><strong>Build better builders</strong></div></div></div>
+ </section>
+ <section class="grid" id="prompt">
+ <div class="panel"><div class="section-title"><div><div class="eyebrow">One true prompt</div><h3 style="font-size:var(--text-lg)">Paste this into Kilo Builder</h3></div><p>It tells the app builder to create a self-building AI workspace, not just a dashboard.</p></div><textarea class="prompt-box" id="promptText" spellcheck="false">Build a production-grade web app called EVEZ Tamagotchi Builder. This is not a landing page. This is a sandboxed AI operating organism for a phone, inspired by OpenClaw but meant to feel more alive, more visual, more autonomous, and more useful than a normal agent dashboard.
+
+Core premise:
+Create an app where an embedded AI worker can plan, route, sandbox, simulate browsing, manage many internal work tabs, decompose goals into sub-agents, reflect on its own progress, and continuously generate improved versions of its own tools. The user should feel like they are caring for and directing a living worker intelligence on their phone, similar to a Tamagotchi crossed with an autonomous dev console.
+
+Product goals:
+1. The app must let the user issue one high-level mission and watch the system split that mission into workers, nested browser tasks, tool calls, memory updates, and self-improvement loops.
+2. The AI inside the app should visually appear to be building onto the internet from within a sandbox, with clear status panels for discovery, routing, synthesis, browser tab swarms, and deployment staging.
+3. The app should make OpenClaw look like infrastructure underneath it, not the final user experience.
+4. The experience should feel mobile-first and operator-friendly, especially for Android phone usage.
+5. The worker should have a Tamagotchi-like life state: energy, focus, entropy, health, growth stage, and mood based on successful work cycles.
+6. The interface should include a simulated browser colony where tabs can be spawned, grouped, paused, merged, and promoted into mission branches.
+7. Include a builder loop where the app proposes ways to improve itself: better prompts, better tools, better routing, better knowledge compression, better task planning.
+8. The design must be clean, premium, dark-mode native, and not generic AI slop.
+
+Required sections:
+- Mission input console
+- Live orchestration timeline
+- Browser swarm / tab colony view
+- Tamagotchi worker chamber
+- Sub-agent tree map
+- Self-improvement lab
+- Memory and invariant registry
+- Deployment runway panel
+- Prompt forge for creating improved descendants of the app
+
+Required interactions:
+- User enters a mission
+- AI breaks it into tasks and sub-agents
+- App animates the spawning of internal browser tabs and tool routes
+- Worker pet state changes as tasks succeed or fail
+- Self-improvement lab generates upgrade proposals
+- User can accept or reject upgrades
+- Prompt forge outputs a next-generation builder prompt
+
+Technical constraints:
+- Single-file static HTML app with embedded CSS and JS
+- No backend required
+- No localStorage or sessionStorage
+- All state in memory
+- Responsive for phone first, desktop second
+- Include light and dark theme toggle
+- Use semantic HTML
+- Use polished motion with reduced-motion support
+- Use compact web-app typography, not oversized landing-page typography
+
+Design direction:
+Make it feel like a calm but powerful control organism. Use refined dark surfaces, teal or cool-circuit accents, high information density, rounded panels, premium spacing, elegant shadows, and one custom inline SVG logo. Avoid cheesy sci-fi neon and avoid bland SaaS templates. The product should feel like: autonomous research lab + living agent nursery + mobile command center.
+
+Output requirements:
+Return a complete, beautiful, working HTML app named evez-tamagotchi-builder.html. Include realistic fake data, animated task states, tab colony cards, worker pet stat changes, and a prompt forge output section that demonstrates the app trying to generate a better successor to itself.
+
+Extra ambition:
+Add a mode called Internet Emergence where the worker appears to evolve from prompt -> toolchain -> browser swarm -> deployment candidate. Make it feel like the app wants to become a better builder than the one that made it.</textarea></div>
+ <div class="stack">
+ <div class="panel" id="blueprint"><div class="eyebrow">Build blueprint</div><div class="cards"><div class="mini-card"><h4>Layer 1 — Phone shell</h4><p>A mobile-first command center with compact typography, sticky navigation, gesture-friendly cards, and one-screen mission control.</p></div><div class="mini-card"><h4>Layer 2 — Worker organism</h4><p>An AI pet with stateful energy, mood, growth, and work cycles. Success feeds evolution. Errors lower health and trigger self-heal routines.</p></div><div class="mini-card"><h4>Layer 3 — Sandbox internet</h4><p>A browser-tab colony that simulates research, routing, tool use, and nested task execution so the app feels active rather than static.</p></div><div class="mini-card"><h4>Layer 4 — Successor forge</h4><p>A visible mechanism where the system proposes stronger prompts, stronger skills, and stronger descendants that could outperform the current shell.</p></div></div></div>
+ <div class="panel" id="tamagotchi"><div class="eyebrow">Phone worker</div><div class="tamagotchi"><div class="pet"><div class="pet_face" id="petFace">◉‿◉</div></div><div class="pet-stats"><div class="pet-stat"><span>Energy</span><strong id="energyStat">86%</strong></div><div class="pet-stat"><span>Focus</span><strong id="focusStat">91%</strong></div><div class="pet-stat"><span>Growth</span><strong id="growthStat">Stage 4</strong></div></div></div></div>
+ </div>
+ </section>
+ <section class="grid"><div class="panel"><div class="section-title"><div><div class="eyebrow">Runtime narrative</div><h3 style="font-size:var(--text-lg)">What the app should appear to be doing</h3></div><p>The strongest version of this concept shows visible self-direction instead of hiding everything behind one chat box.</p></div><div class="log" id="runtimeLog"><div class="log-item"><small>Mission parse</small>Decomposing user intent into nested work streams, browser routes, and successor experiments.</div><div class="log-item"><small>Browser colony</small>Spawning synthetic tabs for search, synthesis, memory merge, tool routing, and deployment staging.</div><div class="log-item"><small>Self-improvement lab</small>Comparing current orchestrator against a proposed descendant with stronger routing and cleaner prompt compression.</div><div class="log-item"><small>Tamagotchi state</small>Worker mood rises when branches converge cleanly and falls when entropy accumulates without resolution.</div></div></div><div class="panel"><div class="eyebrow">Use it this way</div><div class="cards"><div class="mini-card"><h4>Paste prompt</h4><p>Use the big prompt in Kilo Builder to force a full app build rather than another generic agent shell.</p></div><div class="mini-card"><h4>Then iterate once</h4><p>After the first app exists, ask the built app to generate version two of itself with better mission routing and more believable browser behavior.</p></div><div class="mini-card"><h4>Keep OpenClaw underneath</h4><p>Treat OpenClaw as engine infrastructure, not the visible product. This app becomes the living operator interface on top.</p></div></div><p class="footer-note">This is the correct framing: not just "an AI app," but a phone-native worker habitat that continuously tries to improve its own ability to build.</p></div></section>
+ </main>
+ </div>
+ <script>
+ const themeToggle = document.getElementById('themeToggle');
+ const root = document.documentElement;
+ let theme = root.getAttribute('data-theme') || 'dark';
+ themeToggle.addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; root.setAttribute('data-theme', theme); });
+ const promptText = document.getElementById('promptText');
+ const copyBtn = document.getElementById('copyPromptBtn');
+ const copyIndicator = document.getElementById('copyIndicator');
+ copyBtn.addEventListener('click', async () => { try { await navigator.clipboard.writeText(promptText.value); } catch (e) { promptText.select(); document.execCommand('copy'); } copyIndicator.classList.add('show'); setTimeout(() => copyIndicator.classList.remove('show'), 1600); });
+ const petFace = document.getElementById('petFace'); const energyStat = document.getElementById('energyStat'); const focusStat = document.getElementById('focusStat'); const growthStat = document.getElementById('growthStat'); const runtimeLog = document.getElementById('runtimeLog');
+ const faces = ['◉‿◉', '◕‿↼', '⊙‿⊙', '◉_◉', '◕‿◕']; const stages = ['Stage 3', 'Stage 4', 'Stage 4+', 'Stage 5'];
+ const logEvents = [['Upgrade proposal', 'Prompt forge generated a successor brief with stronger tab-clustering and calmer mission decomposition.'], ['Browser swarm', 'A new research branch opened three synthetic tabs and merged two duplicate routes into one stable branch.'], ['Self-heal', 'Worker detected route drift, repaired entropy, and restored focus without abandoning the mission.'], ['Internet emergence', 'Deployment runway assembled a candidate artifact from prompt logic, interface state, and agent memory summaries.']];
+ let energy = 86; let focus = 91; let growthIndex = 1;
+ setInterval(() => { energy = Math.max(62, Math.min(98, energy + Math.round((Math.random() - 0.35) * 8))); focus = Math.max(68, Math.min(99, focus + Math.round((Math.random() - 0.25) * 7))); if (Math.random() > 0.7) growthIndex = (growthIndex + 1) % stages.length; petFace.textContent = faces[Math.floor(Math.random() * faces.length)]; energyStat.textContent = energy + '%'; focusStat.textContent = focus + '%'; growthStat.textContent = stages[growthIndex]; if (Math.random() > 0.5) { const [label, text] = logEvents[Math.floor(Math.random() * logEvents.length)]; const item = document.createElement('div'); item.className = 'log-item'; item.innerHTML = `<small>${label}</small>${text}`; runtimeLog.prepend(item); while (runtimeLog.children.length > 6) runtimeLog.removeChild(runtimeLog.lastElementChild); } }, 2800);
+ </script>
+</body>
+</html>
