@@ -1,0 +1,53 @@
+# EUE EXECUTION FLOW - Graphviz
+digraph eue_flow {
+ rankdir=TB
+ 
+ // Nodes
+ Request [shape=ellipse, label="Request\n(Email/Slack/Stripe/GitHub)"]
+ Sanitize [shape=box, label="Semantic\nSanitizer", fillcolor=lightblue]
+ Classify [shape=box, label="Capability\nClassifier", fillcolor=lightblue]
+ 
+ // Gates
+ FinancialGate [shape=diamond, label="Financial\nLayer\n(AP2 Verify)", fillcolor=orange]
+ PoliticalGate [shape=diamond, label="Political\nLayer\n(Policy Engine)", fillcolor=orange]
+ SocialGate [shape=diamond, label="Social\nLayer\n(Consensus)", fillcolor=orange]
+ TechnicalPass [shape=box, label="Technical\nPass", fillcolor=green]
+ 
+ // Digital Contract
+ DigitalContract [shape=box, label="Digital Contract\nVerification", fillcolor=yellow]
+ 
+ // Execution Gate
+ ExecGate [shape=diamond, label="Execution\nGate\n(Pause/Halt/Release)", fillcolor=red]
+ 
+ // Human Review
+ Human [shape=ellipse, label="Human\nReview", fillcolor=red, style=dashed]
+ 
+ // Agent Clusters
+ AgentMesh [shape=box, label="Agent Mesh\n(Growing Capable Network)", fillcolor=lightgray]
+ 
+ // Output
+ Output [shape=ellipse, label="Output\n(Execute/Log/Learn)"]
+ 
+ // Edges
+ Request -> Sanitize
+ Sanitize -> Classify
+ Classify -> FinancialGate [label="financial?"]
+ Classify -> PoliticalGate [label="political?"]
+ Classify -> SocialGate [label="social?"]
+ Classify -> TechnicalPass [label="technical?"]
+ 
+ FinancialGate -> DigitalContract [label="validated"]
+ PoliticalGate -> DigitalContract [label="validated"]
+ 
+ FinancialGate -> Human [label="needs review"]
+ PoliticalGate -> Human [label="needs review"]
+ SocialGate -> Human [label="needs review"]
+ 
+ DigitalContract -> ExecGate
+ TechnicalPass -> ExecGate
+ 
+ ExecGate -> AgentMesh [label="EXECUTE"]
+ ExecGate -> Human [label="PAUSE/HALT"]
+ 
+ AgentMesh -> Output
+}

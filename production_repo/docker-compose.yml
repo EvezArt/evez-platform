@@ -1,0 +1,192 @@
+# PRODUCTION-GRADE DOCKER-COMPOSE
+# Local development cluster (simulates K8s)
+
+version: "3.9"
+
+services:
+  # ========================
+  # EVENT BACKBONE
+  # ========================
+  redpanda:
+    image: redpandadata/redpanda:latest
+    container_name: event-bus
+    command:
+      - redpanda
+      - start
+      - --overprovisioned
+      - --smp
+      - "1"
+      - --memory
+      - "1G"
+      - --reserve-memory
+      - "0M"
+      - --node-id
+      - "0"
+      - --check=false
+    ports:
+      - "9092:9092"
+    networks:
+      - econ-network
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: econ
+      POSTGRES_PASSWORD: econ
+      POSTGRES_DB: ledger
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - econ-network
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    networks:
+      - econ-network
+
+  # ========================
+  # OBSERVABILITY STACK
+  # ========================
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./infra/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - econ-network
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - econ-network
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    depends_on:
+      - redpanda
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: redpanda:9092
+    networks:
+      - econ-network
+
+  # ========================
+  # CORE SERVICES
+  # ========================
+  ingestor:
+    build: ./services/ingestor
+    environment:
+      KAFKA_BROKER: redpanda:9092
+      TENANT_ISOLATION: enabled
+    depends_on:
+      - redpanda
+    networks:
+      - econ-network
+
+  qualifier:
+    build: ./services/qualifier
+    environment:
+      KAFKA_BROKER: redpanda:9092
+      TENANT_ISOLATION: enabled
+    depends_on:
+      - redpanda
+    networks:
+      - econ-network
+
+  gpu-router:
+    build: ./services/gpu_router
+    environment:
+      KAFKA_BROKER: redpanda:9092
+      MODEL_POOL: local
+    depends_on:
+      - redpanda
+    networks:
+      - econ-network
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+
+  composio-executor:
+    build: ./services/composio_executor
+    environment:
+      KAFKA_BROKER: redpanda:9092
+      COMPOSIO_API_KEY: ${COMPOSIO_API_KEY:-}
+    depends_on:
+      - redpanda
+    networks:
+      - econ-network
+
+  closer:
+    build: ./services/closer
+    environment:
+      KAFKA_BROKER: redpanda:9092
+      STRIPE_API_KEY: ${STRIPE_API_KEY:-}
+    depends_on:
+      - redpanda
+      - postgres
+    networks:
+      - econ-network
+
+  pricing-engine:
+    build: ./services/pricing
+    environment:
+      KAFKA_BROKER: redpanda:9092
+    depends_on:
+      - redpanda
+    networks:
+      - econ-network
+
+  product-engine:
+    build: ./services/product_engine
+    environment:
+      KAFKA_BROKER: redpanda:9092
+    depends_on:
+      - redpanda
+    networks:
+      - econ-network
+
+  learning:
+    build: ./services/learning
+    environment:
+      KAFKA_BROKER: redpanda:9092
+      POSTGRES_CONN: postgres://econ:econ@postgres:5432/ledger
+    depends_on:
+      - redpanda
+      - postgres
+    networks:
+      - econ-network
+
+  # ========================
+  # API GATEWAY
+  # ========================
+  api-gateway:
+    build: ./api
+    ports:
+      - "8000:8000"
+    environment:
+      KAFKA_BROKER: redpanda:9092
+      TENANT_ISOLATION: enabled
+      AUTH_MODE: token
+    depends_on:
+      - redpanda
+    networks:
+      - econ-network
+
+networks:
+  econ-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
