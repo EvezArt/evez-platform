@@ -10,6 +10,6 @@ jobs:
         python: [3.10, 3.11, 3.12]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Test Node ${{ matrix.node }}
         run: echo "Testing Node ${{ matrix.node }}"
