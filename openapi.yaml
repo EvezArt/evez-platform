@@ -1,0 +1,37 @@
+openapi: 3.0.0
+info:
+  title: EVEZ API
+  version: 1.0.0
+  description: EVEZ Platform API
+servers:
+  - url: https://api.evez.art
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+  /inference:
+    post:
+      summary: Run inference
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                model:
+                  type: string
+                prompt:
+                  type: string
+      responses:
+        '200':
+          description: Result
+  /quantum:
+    post:
+      summary: Run quantum circuit
+      responses:
+        '200':
+          description: Result
