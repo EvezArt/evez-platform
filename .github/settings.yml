@@ -1,0 +1,8 @@
+repository:
+  name: $(basename $repo)
+  description: EVEZ Platform
+  homepage: https://evez.art
+  has_issues: true
+  has_wiki: true
+  has_projects: true
+  default_branch: main
