@@ -43,3 +43,17 @@ Pre-built templates for:
 
 ## Documentation
 See wiki for full docs.
+
+## Architecture
+
+```mermaid
+graph TD
+    A[User] --> B[API Gateway]
+    B --> C[Inference Mesh]
+    C --> D[Groq]
+    C --> E[GitHub Models]
+    C --> F[SambaNova]
+    D --> G[Response]
+    E --> G
+    F --> G
+```
