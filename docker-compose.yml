@@ -1,97 +1,31 @@
-# NEXUS Entity Farm — docker-compose
-#
-# Deploy multiple nexus instances as a self-automating, self-hosting entity farm.
-# Each instance is independent but shares the same architecture.
-# Scale by adding more services.
-#
-# Usage:
-#   docker-compose up -d                    # Start all
-#   docker-compose up -d nexus-alpha        # Start one
-#   docker-compose logs -f nexus-alpha      # Follow logs
-#   docker-compose scale nexus-beta=1       # Scale
-#   docker-compose down                     # Stop all
-
-version: "3.8"
+version: "3.9"
 
 services:
-  # === Primary Nexus Instance ===
-  nexus-alpha:
-    build:
-      context: .
-      dockerfile: nexus/Dockerfile
-    container_name: nexus-alpha
-    restart: unless-stopped
+  redis:
+    image: redis:7-alpine
     ports:
-      - "8877:8877"
-    environment:
-      - CHATGPT_API_KEY=${CHATGPT_API_KEY:-}
-      - PERPLEXITY_API_KEY=${PERPLEXITY_API_KEY:-}
-      - NEXUS_ENTITY_NAME=alpha
-      - NEXUS_INTERVAL=300
+      - "6379:6379"
     volumes:
-      - nexus-alpha-memory:/app/nexus/memory
-      - nexus-alpha-spine:/app/soul/cognition
-    healthcheck:
-      test: ["CMD", "python3", "-c", "import pathlib; pathlib.Path('/app/nexus/daemon.pid')"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-          cpus: "0.5"
+      - redis-data:/data
 
-  # === Secondary Nexus Instance (research-focused) ===
-  nexus-beta:
-    build:
-      context: .
-      dockerfile: nexus/Dockerfile
-    container_name: nexus-beta
-    restart: unless-stopped
+  api-gateway:
+    build: ./api
     ports:
-      - "8878:8877"
+      - "8000:8000"
+    depends_on:
+      - redis
     environment:
-      - CHATGPT_API_KEY=${CHATGPT_API_KEY:-}
-      - PERPLEXITY_API_KEY=${PERPLEXITY_API_KEY:-}
-      - NEXUS_ENTITY_NAME=beta
-      - NEXUS_INTERVAL=600
-    volumes:
-      - nexus-beta-memory:/app/nexus/memory
-      - nexus-beta-spine:/app/soul/cognition
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-          cpus: "0.5"
+      - REDIS_HOST=redis
 
-  # === Tertiary Nexus Instance (code-focused) ===
-  nexus-gamma:
-    build:
-      context: .
-      dockerfile: nexus/Dockerfile
-    container_name: nexus-gamma
-    restart: unless-stopped
-    ports:
-      - "8879:8877"
-    environment:
-      - CHATGPT_API_KEY=${CHATGPT_API_KEY:-}
-      - PERPLEXITY_API_KEY=${PERPLEXITY_API_KEY:-}
-      - NEXUS_ENTITY_NAME=gamma
-      - NEXUS_INTERVAL=180
-    volumes:
-      - nexus-gamma-memory:/app/nexus/memory
-      - nexus-gamma-spine:/app/soul/cognition
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-          cpus: "0.5"
+  control-plane:
+    build: ./control_plane
+    depends_on:
+      - redis
+
+  worker:
+    build: ./workers
+    depends_on:
+      - redis
 
 volumes:
-  nexus-alpha-memory:
-  nexus-alpha-spine:
-  nexus-beta-memory:
-  nexus-beta-spine:
-  nexus-gamma-memory:
-  nexus-gamma-spine:
+  redis-data:

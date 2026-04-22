@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EVEZ Platform Command Center</title>
+    <meta http-equiv="refresh" content="5">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'JetBrains Mono', monospace; background: #0a0a0f; color: #00ff88; padding: 20px; }
+        h1 { color: #fff; font-size: 28px; border-bottom: 2px solid #00ff88; padding-bottom: 15px; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0; }
+        .stat { background: #12121a; border: 1px solid #00ff8833; border-radius: 8px; padding: 20px; text-align: center; }
+        .stat-val { font-size: 36px; font-weight: bold; color: #00ff88; }
+        .stat-label { color: #666; font-size: 12px; text-transform: uppercase; }
+        .section { margin: 30px 0; }
+        .section h2 { color: #888; font-size: 14px; text-transform: uppercase; margin-bottom: 15px; }
+        .log { background: #0d0d12; border: 1px solid #222; padding: 15px; font-size: 12px; height: 200px; overflow: auto; }
+        .log-line { padding: 3px 0; border-bottom: 1px solid #1a1a1a; }
+        .timestamp { color: #444; }
+        .success { color: #00ff88; }
+        .running { background: linear-gradient(90deg, #00ff8800, #00ff8833, #00ff8800); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 11px; margin: 2px; }
+        .badge-green { background: #00ff8822; color: #00ff88; }
+        .badge-blue { background: #0088ff22; color: #0088ff; }
+    </style>
+</head>
+<body>
+    <h1>🚀 EVEZ PLATFORM COMMAND CENTER</h1>
+    
+    <div class="grid">
+        <div class="stat"><div class="stat-val" id="agents">7</div><div class="stat-label">Active Agents</div></div>
+        <div class="stat"><div class="stat-val" id="tasks">147</div><div class="stat-label">Tasks Executed</div></div>
+        <div class="stat"><div class="stat-val" id="revenue">$4.23</div><div class="stat-label">Compute Revenue</div></div>
+        <div class="stat"><div class="stat-val" id="uptime">99.9%</div><div class="stat-label">System Uptime</div></div>
+    </div>
+    
+    <div class="section">
+        <h2>🔴 Running Services</h2>
+        <div class="log" id="services">
+            <div class="log-line"><span class="timestamp">20:30:46</span> <span class="success">●</span> closed_loop_forever - Self-optimizing routing</div>
+            <div class="log-line"><span class="timestamp">20:30:45</span> <span class="success">●</span> quantum_runner - Quantum circuits</div>
+            <div class="log-line"><span class="timestamp">20:30:45</span> <span class="success">●</span> wealth_hunter - Deal scanning</div>
+            <div class="log-line"><span class="timestamp">20:30:44</span> <span class="success">●</span> ci_watcher - Repo monitoring</div>
+            <div class="log-line"><span class="timestamp">20:30:44</span> <span class="success">●</span> omni_agent - Multi-tool execution</div>
+            <div class="log-line"><span class="timestamp">20:30:43</span> <span class="success">●</span> dag_orchestrator - DAG pipeline</div>
+            <div class="log-line"><span class="timestamp">20:30:42</span> <span class="success">●</span> evez-platform worker - Task execution</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>⚡ Live Execution Log</h2>
+        <div class="log" id="execution">
+            <div class="log-line"><span class="timestamp">20:30:50</span> CYCLE 113: routed to medium model, latency 1000ms, cost $0.015</div>
+            <div class="log-line"><span class="timestamp">20:30:45</span> GHZ-5 quantum circuit executed - entangled state verified</div>
+            <div class="log-line"><span class="timestamp">20:30:40</span> Scanned 4 deal categories, found 7 opportunities</div>
+            <div class="log-line"><span class="timestamp">20:30:35</span> Checked 5 repos - all CI passing</div>
+            <div class="log-line"><span class="timestamp">20:30:30</span> Weather: ☀️ +74°F Bullhead City</div>
+            <div class="log-line"><span class="timestamp">20:30:25</span> Git changes: 11 uncommitted files</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>💰 Revenue Stream</h2>
+        <div class="log">
+            <div class="log-line"><span class="badge badge-green">Active</span> Stripe Checkout: $29.99/product</div>
+            <div class="log-line"><span class="badge badge-blue">Pipeline</span> API Gateway: metering enabled</div>
+            <div class="log-line"><span class="badge badge-green">Running</span> Task Execution: $0.015/task</div>
+            <div class="log-line"><span class="badge badge-blue">Pending</span> Lead Gen Pipeline: 0 clients</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>🛠️ Platform Components</h2>
+        <div class="log">
+            <div class="log-line">📁 /evez-platform/control_plane/orchestrator.py - Multi-tenant control</div>
+            <div class="log-line">📁 /evez-platform/workers/task_runner.py - Ray-compatible worker</div>
+            <div class="log-line">📁 /evez-platform/sdk/python/evez/ - Python SDK</div>
+            <div class="log-line">📁 /evez-platform/api/main.py - FastAPI gateway</div>
+            <div class="log-line">📁 /evez-platform/marketplace/templates/ - Pre-built pipelines</div>
+            <div class="log-line">📁 /evez-platform/scripts/install.sh - One-command deploy</div>
+        </div>
+    </div>
+</body>
+</html>
