@@ -20,3 +20,10 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
