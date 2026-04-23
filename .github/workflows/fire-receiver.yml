@@ -1,0 +1,14 @@
+name: FIRE Cascade Receiver
+on:
+  repository_dispatch:
+    types: [fire_cascade]
+  workflow_dispatch:
+jobs:
+  fire-received:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Log FIRE event
+        run: |
+          echo "FIRE CASCADE RECEIVED at evez-platform"
+          echo '{"ts":"'$(date -u +%FT%TZ)'","event":"fire_cascade"}' >> .github/keepalive.json
