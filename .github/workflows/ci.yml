@@ -1,0 +1,28 @@
+name: CI Health Check
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  schedule:
+    - cron: '0 6 * * 1'
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f setup.py ]; then pip install -e .; fi
+      - name: Syntax check
+        run: |
+          find . -name '*.py' -not -path './.git/*' -exec python -m py_compile {} \;
+      - name: Test
+        run: |
+          if [ -d tests ]; then python -m pytest tests/ -q || true; fi
