@@ -1,14 +1,13 @@
 ---
 name: Bug Report
-about: Create a report to help us improve
+about: Report a bug or unexpected behavior
 title: '[BUG] '
 labels: bug
 assignees: ''
-
 ---
 
 ## Description
-<!-- Clear and concise description of the issue -->
+A clear description of what the bug is.
 
 ## Steps to Reproduce
 1. 
@@ -16,18 +15,15 @@ assignees: ''
 3. 
 
 ## Expected Behavior
-<!-- What should happen -->
+What you expected to happen.
 
 ## Actual Behavior
-<!-- What actually happens -->
+What actually happened.
 
 ## Environment
-- OS: 
-- Version: 
-- Node version: 
-
-## Screenshots
-<!-- If applicable -->
+- OS:
+- Version:
+- Node/Browser:
 
 ## Additional Context
-<!-- Any other context -->
+Any other context, logs, or screenshots.
