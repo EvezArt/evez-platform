@@ -1,32 +1,15 @@
 # Security Policy
 
-## Supported Versions
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.0.x   | :white_check_mark: |
-
 ## Reporting a Vulnerability
+**DO NOT** create a public GitHub issue. Email:
+- security@evez666.com
+- steven@evez666.com
 
-Please report security vulnerabilities to the maintainers privately.
-DO NOT open a public issue for security vulnerabilities.
+Include: Repository, description, steps to reproduce, impact.
 
-1. Email: Contact the maintainer
-2. Private GitHub Security Advisory: Use GitHub's private reporting
-3. Wait for acknowledgment (usually within 48 hours)
-4. Coordinate disclosure timeline
+## Response Time
+- Initial: 24 hours
+- Patch: 72 hours
+- Resolution: 7 days
 
-## Scope
-
-- Authentication/authorization bypasses
-- Data exposure
-- Remote code execution
-- Injectable code
-- Dependency vulnerabilities
-
-## Out of Scope
-
-- Social engineering
-- Physical security
-- Denial of service (baseline)
-- Features marked experimental
+*Last updated: August 4, 2026*
