@@ -241,8 +241,18 @@ class ToolRegistry:
         if argv[0] == "pwd" and len(argv) == 1:
             pass
         elif argv[0] == "ls":
-            if any(arg.startswith("-") and arg not in {"-l", "-a", "-la", "-al", "--all"} for arg in argv[1:]):
-                return ToolResult(False, "", "Unsupported ls option")
+            root = self.workspace.resolve()
+            for arg in argv[1:]:
+                if arg.startswith("-"):
+                    if arg not in {"-l", "-a", "-la", "-al", "--all"}:
+                        return ToolResult(False, "", "Unsupported ls option")
+                else:
+                    target = Path(arg)
+                    if not target.is_absolute():
+                        target = root / target
+                    target = target.resolve()
+                    if target != root and root not in target.parents:
+                        return ToolResult(False, "", "ls path is outside the agent workspace")
         elif argv[0] == "git" and len(argv) >= 2 and argv[1] in {"status", "diff"}:
             if any(arg.startswith("-") and arg not in {"--short", "--porcelain", "--stat", "--name-only", "--check", "--cached"} for arg in argv[2:]):
                 return ToolResult(False, "", "Unsupported git option")
