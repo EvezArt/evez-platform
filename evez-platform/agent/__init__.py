@@ -8,6 +8,7 @@ Cost: Free (Ollama local + free cloud fallback)
 import json
 import os
 import subprocess
+import shlex
 import time
 import logging
 import re
@@ -225,19 +226,25 @@ class ToolRegistry:
             return ToolResult(False, "", str(e))
 
     async def _run_shell(self, params: dict) -> ToolResult:
-        cmd = params.get("command", "")
-        if not cmd:
+        """Run read-only commands only; shell evaluation is disabled."""
+        command = params.get("command", "")
+        if not isinstance(command, str) or not command.strip():
             return ToolResult(False, "", "No command provided")
+        if any(op in command for op in (";", "|", "&", ">", "<", chr(96), "$", "\\n", "\\r")):
+            return ToolResult(False, "", "Shell operators are blocked")
         try:
-            result = subprocess.run(
-                cmd, shell=True, capture_output=True, text=True,
-                timeout=30, cwd=str(self.workspace)
-            )
+            argv = shlex.split(command)
+        except ValueError as exc:
+            return ToolResult(False, "", str(exc))
+        allowed = (argv and argv[0] == "pwd" and len(argv) == 1) or (argv and argv[0] == "ls" and all(arg in {"-l", "-a", "-la", "-al", "--all"} for arg in argv[1:])) or (len(argv) == 2 and argv[0] == "git" and argv[1] in {"status", "diff"})
+        if not allowed:
+            return ToolResult(False, "", "Only pwd, ls, git status, and git diff are allowed")
+        try:
+            result = subprocess.run(argv, shell=False, capture_output=True, text=True, timeout=30, cwd=str(self.workspace.resolve()))
             output = result.stdout + result.stderr
-            return ToolResult(result.returncode == 0, output[:5000],
-                            "" if result.returncode == 0 else f"Exit code: {result.returncode}")
-        except subprocess.TimeoutExpired:
-            return ToolResult(False, "", "Command timed out (30s)")
+            return ToolResult(result.returncode == 0, output[:5000], "" if result.returncode == 0 else f"Exit code: {result.returncode}")
+        except (subprocess.TimeoutExpired, OSError) as exc:
+            return ToolResult(False, "", str(exc))
 
     async def _read_file(self, params: dict) -> ToolResult:
         path = Path(params.get("path", ""))
