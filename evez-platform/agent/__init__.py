@@ -246,10 +246,18 @@ class ToolRegistry:
         except (subprocess.TimeoutExpired, OSError) as exc:
             return ToolResult(False, "", str(exc))
 
-    async def _read_file(self, params: dict) -> ToolResult:
-        path = Path(params.get("path", ""))
+    def _workspace_path(self, value: str) -> Path:
+        root = self.workspace.resolve()
+        path = Path(value).expanduser()
         if not path.is_absolute():
-            path = self.workspace / path
+            path = root / path
+        path = path.resolve()
+        if path == root or root not in path.parents:
+            raise PermissionError("Path must be inside the workspace")
+        return path
+
+    async def _read_file(self, params: dict) -> ToolResult:
+        path = self._workspace_path(params.get("path", ""))
         try:
             content = path.read_text()
             return ToolResult(True, content[:10000])
