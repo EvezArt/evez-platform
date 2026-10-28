@@ -265,12 +265,14 @@ class ToolRegistry:
             return ToolResult(False, "", str(e))
 
     async def _write_file(self, params: dict) -> ToolResult:
-        path = Path(params.get("path", ""))
         content = params.get("content", "")
-        if not path.is_absolute():
-            path = self.workspace / path
+        if not isinstance(content, str):
+            return ToolResult(False, "", "File content must be text")
         try:
+            path = self._workspace_path(params.get("path", ""))
             path.parent.mkdir(parents=True, exist_ok=True)
+            # Resolve again after parent creation to avoid a symlinked-parent bypass.
+            path = self._workspace_path(str(path))
             path.write_text(content)
             return ToolResult(True, f"Written {len(content)} bytes to {path}")
         except Exception as e:
