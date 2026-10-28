@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import asdict
 import subprocess
 import shlex
+from pathlib import Path
 from typing import Any, Dict, Optional
 
 from gateway import GatewayClient
