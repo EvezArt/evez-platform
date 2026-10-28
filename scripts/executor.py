@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import asdict
 import subprocess
+import shlex
 from typing import Any, Dict, Optional
 
 from gateway import GatewayClient
@@ -83,18 +84,29 @@ class Executor:
             return {"ok": True, "status": "patched"}
 
         if action_name == "shell":
-            cmd = str(payload.get("cmd", ""))
-            if not cmd:
+            cmd = payload.get("cmd", "")
+            if not isinstance(cmd, str) or not cmd.strip():
                 return {"ok": False, "error": "missing command"}
-            # Local shell execution is intentionally explicit and gated by the orchestrator.
-            proc = subprocess.run(cmd, shell=True, capture_output=True, text=True)
-            return {
-                "ok": proc.returncode == 0,
-                "returncode": proc.returncode,
-                "stdout": proc.stdout,
-                "stderr": proc.stderr,
-            }
-
+            if any(op in cmd for op in (";", "|", "&", ">", "<", chr(96), "$", "\\n", "\\r")):
+                return {"ok": False, "error": "shell operators and expansions are blocked"}
+            try:
+                argv = shlex.split(cmd)
+            except ValueError as exc:
+                return {"ok": False, "error": str(exc)}
+            if argv and argv[0] == "pwd" and len(argv) == 1:
+                pass
+            elif argv and argv[0] == "ls" and all(arg in {"-l", "-a", "-la", "-al", "--all"} for arg in argv[1:]):
+                pass
+            elif len(argv) == 2 and argv[0] == "git" and argv[1] in {"status", "diff"}:
+                pass
+            else:
+                return {"ok": False, "error": "only pwd, ls, git status, and git diff are permitted"}
+            try:
+                proc = subprocess.run(argv, shell=False, capture_output=True, text=True, timeout=30)
+            except (OSError, subprocess.TimeoutExpired) as exc:
+                return {"ok": False, "error": str(exc)}
+            return {"ok": proc.returncode == 0, "returncode": proc.returncode,
+                    "stdout": proc.stdout[:5000], "stderr": proc.stderr[:5000]}
         # Gateway-backed device actions.
         action_payload: Dict[str, Any]
         if action_name == "speaker.speak":
